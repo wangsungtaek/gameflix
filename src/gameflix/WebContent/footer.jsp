@@ -5,16 +5,13 @@
     %>
 <style>
 #main-footer { background: black; }
-#main-footer > #footer-container {
- 	margin: 0 auto; width: 1024px; padding: 40px; font-size: 12px; color: rgb(180, 180, 180);
-}
+#main-footer > #footer-container {margin: 0 auto; width: 1024px; padding: 40px; font-size: 12px; color: rgb(180, 180, 180);}
 #main-footer > #footer-container { display: flex; line-height: 1.5; justify-content: space-between;}
 #main-footer > #footer-container > #left-info .title{ margin-bottom: 20px; }
 #main-footer > #footer-container > #right-info { margin-left: 100px; }
 #main-footer > #footer-container > #right-info > .tel { font-size: 30px; font-weight: 500; margin-right: 5px;}
 #main-footer > #footer-container > #right-info > button {
-	color: rgb(180, 180, 180); border: 1px solid gray; margin: 20px 10px 0 0; width: 100px; height: 40px;
-}
+		color: rgb(180, 180, 180); border: 1px solid gray; margin: 20px 10px 0 0; width: 100px; height: 40px;}
 #main-footer > #footer-container > #right-info > button:hover { color: white; border-color: white;}
 </style>
 <!-- footer -->
