@@ -24,13 +24,12 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 		newGameList += "<li><a href=\""+newGameLink[i]+"\"><img src=\""+newGamePath[i]+"\"></a></li>";
 	}
 	log(newGameList);
-/* 	<li><a href="11.jsp"><img src="img/01.jpg"></a></li> */	
 %>
 <style>
-/* body {background-image: url(img/01.jpg);} */
-#main-container > #newGameList { margin: 100px; color: white;}
-#main-container > #newGameList ul { display: flex; }
-#main-container > #newGameList li { padding: 10px; }
+body{background-image: url(img/01.jpg);}  
+#container{ width: 1024px; margin: auto;}
+#container > #main-content > #top3 { }
+#container > #side-banner { position: -webkit-sticky; position: sticky; top: 0;}
 </style>
 <script type="text/javascript">
 	var imgArray = new Array();
@@ -49,16 +48,37 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 </head>
 <body onload="showImage()">
 	<%@ include file="header.jsp" %>
-	<%-- <jsp:include page="header.jsp"/> --%>
-	<div id="main-container">
-		<div id="top3">
-			<img id="introImg" border="0">
-		</div>
-		<div id="newGameList">
-			<h2>최신게임</h2>
-			<ul><%=newGameList %></ul>
-		</div>
+	
+	<div id="container">
+		<section id="main-content">
+			<h2 class="hidden">인기 Top3 게임 리스트</h2>
+			<div id="top3">
+				<img id="introImg" border="0">
+			</div>
+			<h2 class="hidden">최신 등록 게임 리스트</h2>
+			<div id="newGameList">
+				<h3>최신게임</h2>
+				<ul><%=newGameList %></ul>
+			</div>
+			<h2 class="hidden">전체 게임 리스트</h2>
+			<div id="totalGameList">
+				<h3>전체게임</h3>
+				<ul><%=newGameList %></ul>
+			</div>
+		</section>
+		
+		<aside id="side-banner">
+			<div class="ranking-box">
+				<h2>전체 랭킹</h2>
+				<a>랭킹게시판</a>
+				<table>
+					<tr><td>아이디</td><td>점수</td></tr>
+					<tr><td>gun111</td><td>100</td></tr>
+				</table>
+			</div>
+		</aside>
 	</div>
-	<button onclick="showImage()" value="">aaaaaaaa</button>
+	
+	<%@ include file="footer.jsp" %>
 </body>
 </html>
