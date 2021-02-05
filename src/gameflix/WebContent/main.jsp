@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 <link rel="stylesheet" href="default.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 <%
 	// 최신등록 순
 	String[] newGameLink = {"#","#","#","#","#","#"};
@@ -25,14 +26,14 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 		newGameList += "<div class=\"titl\">"+newGameTitle[i]+"</div>";
 		newGameList += "</a></li>";
 	}
-	log(newGameList);
+	log(newGameList);  
 %>
 <style>
 body{background-image: url(img/01.jpg);}  
-#container{ width: 1024px; margin: auto; }
-#container > #main-content > #top3 { margin: 10px 0 30px 0;}
-#container > #main-content > #top3  a { display: block;}
-#container > #main-content > #top3 img { width: 100%; height: 500px;  border-radius: 5px; }
+#container{ width: 1024px; margin: 0 auto; }
+
+#container > #main-content > #top3GameList { margin: 20px 0 30px 0; }
+#container > #main-content > #top3GameList img { width: 100%; height: 500px; border-radius: 10px; border: 1px solid lightgray;}
 
 #container > #main-content > .gameList { margin-bottom: 30px; }
 #container > #main-content > .gameList h3 { color: white; font-size: 25px; font-weight: bold; }
@@ -40,9 +41,23 @@ body{background-image: url(img/01.jpg);}
 #container > #main-content > .gameList li { position: relative; margin-bottom: 20px;}
 #container > #main-content > .gameList .titl { position: absolute; top: 50px; left: 135px; font-size: 15px; font-weight: bold; }
 #container > #main-content > .gameList img{ width: 300px; border-radius: 10px; border: 0.2px solid lightgray; }
+
+#container > #side-banner { background: purple; position: relative; width: 1000px; }
+#container > #side-banner > #ranking-box { 
+	 width: 200px; top: -1620px; right: -240px; position: absolute;
+	border-radius: 5px; color: lightgray;
+}
+#container > #side-banner > #ranking-box h2 { margin: 0 0 10px 10px; font-size: 15px; font-weight: bold; float: left;}
+#container > #side-banner > #ranking-box a { float: right; font-size: 12px; color: #B97687; margin: 5px 8px 0 0}
+#container > #side-banner > #ranking-box a:hover { color: #E5BFBC; text-decoration: underline;}
+#container > #side-banner > #ranking-box img { width: 20px;}
+#container > #side-banner > #ranking-box table { text-align: center; margin: 0 auto; width: 90%; margin-bottom: 10px;}
+#container > #side-banner > #ranking-box td,th { border: 1px solid; padding: 5px; font-size: 13px;}
+#container > #side-banner > #ranking-box td { font-size: 10px; }
 </style>
 <script type="text/javascript">
-	var imgArray = new Array();
+	
+/* 	var imgArray = new Array();
 	imgArray[0] = "img/01-introImg.jpg";
 	imgArray[1] = "img/02-introImg.jpg";
 	imgArray[2] = "img/03-introImg.jpg";
@@ -53,17 +68,41 @@ body{background-image: url(img/01.jpg);}
 		var objImg = document.getElementById("introImg");
 		objImg.src = imgArray[showNum];
 		setTimeout("showImage()", 3000);
+	} */
+	
+	window.onload = function() {
+		var floatPosition = parseInt($("#ranking-box").css('top'))
+		console.log(floatPosition);
+		
+		$(window).scroll(function(){
+			
+			var currentTop = $(window).scrollTop();
+			var bannerTop = currentTop + floatPosition + "px";
+			
+			$("#ranking-box").stop().animate({
+				"top" : bannerTop
+			},500);
+		}).scroll();
+	}
+	
+	function test(){
+		var imgObj = document.querySelector("#introImg")
+		console.log(imgObj);
+		imgObj.src = "img/01-introImg.jpg";
+		console.log(imgObj);
 	}
 </script>
 </head>
-<body onload="showImage()">
+<!-- <body onload="showImage()"> -->
+<body>
 	<%@ include file="header.jsp" %>
 	
 	<div id="container">
 		<section id="main-content">
 			<h2 class="hidden">인기 Top3 게임 리스트</h2>
-			<div id="top3">
-				<a href="#"><img id="introImg" border="0"></a>
+			<div id="top3GameList">
+				<img id="introImg" alt="인기게임이미지" src="img/02-introImg.jpg"/>
+				<button onclick="test()">사진변경</button>
 			</div>
 			<h2 class="hidden">최신 등록 게임 리스트</h2>
 			<div id="newGameList" class="gameList">
@@ -78,12 +117,21 @@ body{background-image: url(img/01.jpg);}
 		</section>
 		
 		<aside id="side-banner">
-			<div class="ranking-box">
-				<h2>전체 랭킹</h2>
-				<a>랭킹게시판</a>
+			<div id="ranking-box">
+				<h2>유저랭킹 TOP5</h2>
+				<a href="#">랭킹게시판</a>
 				<table>
-					<tr><td>아이디</td><td>점수</td></tr>
-					<tr><td>gun111</td><td>100</td></tr>
+					<colgroup>
+						<col style="width: 15%"/>
+						<col style="width: 45%"/>
+						<col style="width: 40%"/>
+					</colgroup>
+					<tr><th></th><th>아이디</th><th>점수</th></tr>
+					<tr><td><img src="img/badge/grade-1.png"></td><td>gun111</td><td>5000</td></tr>
+					<tr><td><img src="img/badge/grade-2.png"></td><td>gun222</td><td>4000</td></tr>
+					<tr><td><img src="img/badge/grade-3.png"></td><td>gun333</td><td>3000</td></tr>
+					<tr><td><img src="img/badge/grade-4.png"></td><td>gun444</td><td>2000</td></tr>
+					<tr><td><img src="img/badge/grade-5.png"></td><td>gun555</td><td>1000</td></tr>
 				</table>
 			</div>
 		</aside>
