@@ -10,11 +10,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gameflix</title>
+<link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 <link rel="stylesheet" href="default.css">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script>
+
 <%
 	// 최신등록 순
 	String[] newGameLink = {"#","#","#","#","#","#"};
@@ -32,8 +34,12 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 body{background-image: url(img/01.jpg);}  
 #container{ width: 1024px; margin: 0 auto; }
 
-#container > #main-content > #top3GameList { margin: 20px 0 30px 0; }
-#container > #main-content > #top3GameList img { width: 100%; height: 500px; border-radius: 10px; border: 1px solid lightgray;}
+#container > #main-content > #top3GameList { margin: 20px 0 30px 0; position: relative; }
+#container > #main-content > #top3GameList img { width: 100%; height: 500px; border-radius: 10px; border: 1px solid lightgray; }
+#container > #main-content > #top3GameList .btn-group { position: absolute; top: 40%; width: 100%; padding: 20px; }
+#container > #main-content > #top3GameList button { font-size: 30px; color: white; }
+#container > #main-content > #top3GameList button:nth-child(1) { float: left; }
+#container > #main-content > #top3GameList button:nth-child(2) { float: right; }
 
 #container > #main-content > .gameList { margin-bottom: 30px; }
 #container > #main-content > .gameList h3 { color: white; font-size: 25px; font-weight: bold; }
@@ -84,12 +90,19 @@ body{background-image: url(img/01.jpg);}
 			},500);
 		}).scroll();
 	}
-	
-	function test(){
-		var imgObj = document.querySelector("#introImg")
-		console.log(imgObj);
-		imgObj.src = "img/01-introImg.jpg";
-		console.log(imgObj);
+	var imgNum = 0;
+	function setImg(direction){
+		var imgObj = document.querySelector("#introImg");
+		if(direction == "left") {
+			imgNum <= 0? imgNum = 2 : imgNum--;
+		} else {
+			imgNum >= 2? imgNum = 0 : imgNum++;
+		}
+		switch(imgNum) {
+			case 0: imgObj.src = "img/01-introImg.jpg"; break;
+			case 1: imgObj.src = "img/02-introImg.jpg"; break;
+			case 2: imgObj.src = "img/03-introImg.jpg"; break;
+		}
 	}
 </script>
 </head>
@@ -101,8 +114,11 @@ body{background-image: url(img/01.jpg);}
 		<section id="main-content">
 			<h2 class="hidden">인기 Top3 게임 리스트</h2>
 			<div id="top3GameList">
-				<img id="introImg" alt="인기게임이미지" src="img/02-introImg.jpg"/>
-				<button onclick="test()">사진변경</button>
+				<img id="introImg" alt="인기게임이미지" src="img/01-introImg.jpg"/>
+				<div class="btn-group">
+					<button onclick="setImg('left')"><i class="fas fa-arrow-circle-left"></i></button>
+					<button onclick="setImg('right')"><i class="fas fa-arrow-circle-right"></i></button>
+				</div>
 			</div>
 			<h2 class="hidden">최신 등록 게임 리스트</h2>
 			<div id="newGameList" class="gameList">

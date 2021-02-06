@@ -5,7 +5,7 @@
     %>
 <style>
 .hidden { overflow: hidden; position: absolute; top: -9999px; left: -9999px; width: 1px; height: 0;}
-#main-head { background-color: black; width: 1024px; margin:0 auto;
+#main-head { background-color: rgba(0,0,0,0.4); width: 1024px; margin:0 auto;
 			 padding: 20px 0 0 20px; position: relative; height: 80px; min-width:1000px;}
 #main-head > .util { background: transparent; position: absolute; top:0px; right:0px;}
 #main-head > .util > .util-list { display: flex; font-weight: 500;}
