@@ -41,12 +41,13 @@ body{background-image: url(img/01.jpg);}
 #container > #main-content > #top3GameList button:nth-child(1) { float: left; }
 #container > #main-content > #top3GameList button:nth-child(2) { float: right; }
 
-#container > #main-content > .gameList { margin-bottom: 30px; }
-#container > #main-content > .gameList h3 { color: white; font-size: 25px; font-weight: bold; }
-#container > #main-content > .gameList ul { display: flex; flex-wrap: wrap; justify-content: space-between; }
-#container > #main-content > .gameList li { position: relative; margin-bottom: 20px;}
-#container > #main-content > .gameList .titl { position: absolute; top: 50px; left: 135px; font-size: 15px; font-weight: bold; }
-#container > #main-content > .gameList img{ width: 300px; border-radius: 10px; border: 0.2px solid lightgray; }
+#container > #main-content > .gameList { margin-bottom: 30px; height: 550px;}
+#container > #main-content > .gameList h3 { color: white; font-size: 25px; font-weight: bold; margin-bottom: 5px; }
+#container > #main-content > .gameList ul { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+#container > #main-content > .gameList li { position: relative; margin-bottom: 20px; }
+#container > #main-content > .gameList .titl { position: absolute; top: 50px; left: 45%; font-size: 20px; font-weight: bold; }
+#container > #main-content > .gameList img { width: 300px; border-radius: 10px; border: 0.2px solid lightgray; transition: 0.5s; }
+#container > #main-content > .gameList img:hover { width: 330px; }
 
 #container > #side-banner { background: purple; position: relative; width: 1000px; }
 #container > #side-banner > #ranking-box { 

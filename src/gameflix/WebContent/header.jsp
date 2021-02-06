@@ -40,7 +40,7 @@
 </script>
 <!-- header -->
 <header id="main-head">
-	<h1><a href="#"><img src="img/logo.png" alt="gameflix"></a></h1>
+	<h1><a href="main.jsp"><img src="img/logo.png" alt="gameflix"></a></h1>
 	<h2 class="hidden">유틸메뉴</h2>
 	<div class="util">
 		<ul class="util-list">
@@ -64,7 +64,7 @@
 	<h2 class="hidden">대메뉴</h2>
 	<nav id="lnb">
 		<ul>
-			<li><a href="#">게임1</a></li>
+			<li><a href="integrate_Game.jsp">게임1</a></li>
 			<li><a href="#">게임2</a></li>					
 			<li><a href="#">게임3</a></li>					
 			<li><a href="#">게임4</a></li>

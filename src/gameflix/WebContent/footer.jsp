@@ -4,7 +4,7 @@
     import="jspexp.z01_vo.*"
     %>
 <style>
-#main-footer { background: black; }
+#main-footer { background-color: rgba(0,0,0,0.4); width: 1024px; margin: 0 auto; }
 #main-footer > #footer-container {margin: 0 auto; width: 1024px; padding: 40px; font-size: 12px; color: rgb(180, 180, 180);}
 #main-footer > #footer-container { display: flex; line-height: 1.5; justify-content: space-between;}
 #main-footer > #footer-container > #left-info .title{ margin-bottom: 20px; }
