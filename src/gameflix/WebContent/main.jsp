@@ -1,7 +1,8 @@
+<%@page import="gameflix.web.entity.Game"%>
+<%@page import="gameflix.web.service.GameService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
-    import="jspexp.z01_vo.*"
     %>
 <% request.setCharacterEncoding("UTF-8");
    String path = request.getContextPath();
@@ -28,7 +29,13 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 		newGameList += "<div class=\"titl\">"+newGameTitle[i]+"</div>";
 		newGameList += "</a></li>";
 	}
-	log(newGameList);  
+	log(newGameList);
+	
+	GameService service = new GameService();
+	ArrayList<Game> newGame = service.getNewGameList();
+	ArrayList<Game> allGame = service.getGameList(2);
+	int cnt = service.getCount();
+	
 %>
 <style>
 body{background-image: url(img/01.jpg);}  
@@ -41,12 +48,15 @@ body{background-image: url(img/01.jpg);}
 #container > #main-content > #top3GameList button:nth-child(1) { float: left; }
 #container > #main-content > #top3GameList button:nth-child(2) { float: right; }
 
-#container > #main-content > .gameList { margin-bottom: 30px; height: 550px;}
-#container > #main-content > .gameList h3 { color: white; font-size: 25px; font-weight: bold; margin-bottom: 5px; }
+#container > #main-content > .gameList { margin-bottom: 30px; height: 350px; }
+#container > #main-content > .gameList h3 { color: white; font-size: 25px; font-weight: bold; margin-bottom: 10px; }
 #container > #main-content > .gameList ul { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
 #container > #main-content > .gameList li { position: relative; margin-bottom: 20px; }
-#container > #main-content > .gameList .titl { position: absolute; top: 50px; left: 45%; font-size: 20px; font-weight: bold; }
-#container > #main-content > .gameList img { width: 300px; border-radius: 10px; border: 0.2px solid lightgray; transition: 0.5s; }
+#container > #main-content > .gameList .gameInfo:before { content:"❯"; }
+#container > #main-content > .gameList .gameInfo { font-size: 1.2em; padding-left: 10px; font-weight: bold; }
+#container > #main-content > .gameList .gameInfo > span { float: right; font-size: 14px; line-height: 1.7; color: lightgray;}
+#container > #main-content > .gameList .gameInfo:after { content: ""; clear: both; display: block; }
+#container > #main-content > .gameList img { width: 300px; border-radius: 10px; border: 0.2px solid lightgray; transition: 0.5s; margin-bottom: 10px; }
 #container > #main-content > .gameList img:hover { width: 330px; }
 
 #container > #side-banner { background: purple; position: relative; width: 1000px; }
@@ -124,12 +134,34 @@ body{background-image: url(img/01.jpg);}
 			<h2 class="hidden">최신 등록 게임 리스트</h2>
 			<div id="newGameList" class="gameList">
 				<h3>최신게임</h3>
-				<ul><%=newGameList %></ul>
+				<ul>
+					<%for(Game g : newGame) { %>
+					<li>
+						<a href="<%=g.getG_link() %>">
+							<img src="<%=g.getG_imgPath() %>">
+							<div class="gameInfo">
+								<%=g.getG_name() %><span>등록일 : <%=g.getG_date() %></span>
+							</div>
+						</a>
+					</li>
+					<%} %>
+				</ul>
 			</div>
 			<h2 class="hidden">전체 게임 리스트</h2>
 			<div id="totalGameList" class="gameList">
-				<h3>전체게임</h3>
-				<ul><%=newGameList %></ul>
+				<h3>전체게임(<%=cnt %>)</h3>
+				<ul>
+					<%for(Game g : allGame) { %>
+					<li>
+						<a href="<%=g.getG_link() %>">
+							<img src="<%=g.getG_imgPath() %>">
+							<div class="gameInfo">
+								<%=g.getG_name() %><span>등록일 : <%=g.getG_date() %></span>
+							</div>
+						</a>
+					</li>
+					<%} %>
+				</ul>
 			</div>
 		</section>
 		

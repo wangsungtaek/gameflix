@@ -1,4 +1,4 @@
-package gameflix.integrate_game;
+package gameflix.web.entity;
 
 public class Bottle {
 	private String layer1;

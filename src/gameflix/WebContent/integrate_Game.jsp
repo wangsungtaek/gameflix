@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
-    import="gameflix.integrate_game.*"
+    import="gameflix.web.entity.*"
     %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String path = request.getContextPath();
    
+	boolean gameStart = false;
+
 	// 병 7개
 	ArrayList<Bottle> bottles = new ArrayList<Bottle>();
 	
@@ -75,16 +77,21 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 
 <style>
 body{background-image: url(img/01.jpg);}  
-#game-container { height: 800px; width: 1024px; margin: 0 auto; background: whitesmoke;  text-align: center; }
+#game-container { height: 800px; width: 1024px; margin: 0 auto; background: whitesmoke;  text-align: center; position: relative;}
 #game-container > label { margin-bottom: 50px; display: block; padding-top: 30px; vertical-align: top;}
 progress { width: 300px; height: 20px; padding-top: 5px;}
 #game-container > #game-area { width: 500px; padding-top: 100px; border: 0.5px solid lightgray; margin: 0 auto; border-radius: 5px;}
 #game-container > #game-area > .top-area { display: flex; justify-content: center; }
 #game-container > #game-area > .bottom-area { display: flex; justify-content: center; }
 
-
 #game-container .bottle { padding: 20px; height: 200px;}
 #game-container img { width: 40px; height: 23px; display: block; margin-bottom: -1px; }
+
+#control { position: absolute; top: 100px; right: 30px;}
+#control > .level { font-size: 50px; margin-bottom: 20px; }
+#control > .score { font-size: 30px; color: red; margin-bottom: 250px; }
+#control > #btn-start { background: gray; color: white; width: 200px; height: 50px; margin-top: 20px; }
+
 </style>
 <script type="text/javascript">
 	window.onload = function() {
@@ -217,8 +224,11 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 				</li>
 			</ul>
 		</div>
-		
-		
+		<div id="control">
+			<div class="level">Level.1</div>
+			<div class="score">100점</div>
+			<button id="btn-start" onclick="gameStart()">GAME START</button>
+		</div>
 	</div>
 
 	<%@ include file="footer.jsp" %>
