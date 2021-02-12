@@ -37,6 +37,35 @@ public class GameService {
 		}
 	}
 
+	public ArrayList<Game> getGameList() {
+		ArrayList<Game> list = new ArrayList<Game>();
+		
+		String sql = "SELECT * FROM G_GAME ORDER BY g_date DESC";
+		try {
+			setCon();
+			prst = conn.prepareStatement(sql);
+			rs = prst.executeQuery();
+			while(rs.next()) {
+				
+				String g_name = rs.getString("G_NAME");
+				Date g_date = rs.getDate("G_DATE");
+				int g_cnt = rs.getInt("G_CNT");
+				String g_imgPath = rs.getString("G_IMGPATH");
+				String g_link = rs.getString("G_LINK");
+				Game game = new Game(g_name, g_date, g_cnt, g_imgPath, g_link);
+				list.add(game);
+			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public ArrayList<Game> getGameList(int page) {
 		ArrayList<Game> list = new ArrayList<Game>();
 		
@@ -60,6 +89,10 @@ public class GameService {
 				Game game = new Game(g_name, g_date, g_cnt, g_imgPath, g_link);
 				list.add(game);
 			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,6 +117,10 @@ public class GameService {
 				Game game = new Game(g_name, g_date, g_cnt, g_imgPath, g_link);
 				list.add(game);
 			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,6 +145,10 @@ public class GameService {
 				Game game = new Game(g_name, g_date, g_cnt, g_imgPath, g_link);
 				list.add(game);
 			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +157,7 @@ public class GameService {
 	}
 	
 	public int getCount() {
-		String sql = "SELECT count(*) cnt FROM GAME";
+		String sql = "SELECT count(*) cnt FROM G_GAME";
 		int cnt=0;
 		try {
 			setCon();
@@ -125,6 +166,10 @@ public class GameService {
 			if(rs.next()) {
 				cnt = rs.getInt("cnt");
 			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,14 +177,31 @@ public class GameService {
 		return cnt;
 	}
 	
+	public void deleteGame(String name) {
+		String[] sql = {
+			"DELETE FROM G_BADGE WHERE g_name = ?",
+			"DELETE FROM G_PLAYLOG WHERE g_name =  ?",
+			"DELETE FROM G_GAME WHERE g_name = ?"
+		};
+		try {
+			setCon();
+			for(int i=0; i<sql.length; i++) {
+				prst = conn.prepareStatement(sql[i]);
+				prst.setString(1, name);
+				prst.execute();
+			}
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public static void main(String[] args) {
-//		GameService service = new GameService();
-//		
-//		ArrayList<Game> list = (ArrayList<Game>) service.getNewGameList();
-//		for(Game g : list) {
-//			System.out.println(g.getG_name()+", "+g.getG_cnt()+", "+g.getG_date()+", "+g.getG_imgPath());
-//		}
-//		System.out.println(service.getCount());
+		GameService service = new GameService();
+		
 	}
 }
