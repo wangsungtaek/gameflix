@@ -18,78 +18,78 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 <%	
 	GameService service = new GameService();
 	ArrayList<Game> gameList = service.getGameList();
+	String g_name = request.getParameter("g_name"); if(g_name == null) g_name="";
+	String g_imgPath = request.getParameter("g_imgPath");
+	String g_link = request.getParameter("g_link");
 	
-	String[] checkArry = request.getParameterValues("check");
-
-	if(checkArry != null) {
-		for(String s : checkArry){
-			service.deleteGame(s);
-		}
-		pageContext.forward("/insertGame.jsp");
+	// 삽입
+	if(g_name != null && g_imgPath != null && g_link != null &&
+	   !g_name.equals("") && !g_imgPath.equals("") && !g_link.equals("")) {
+		String dafaultImgPath = "img/game/";
+		service.insertGame(new Game(g_name, dafaultImgPath+g_imgPath, g_link));
 	}
-	
 %>
 <style>
 body {background-image: url(img/01.jpg);}  
-#container { width: 1024px; height: 800px; margin: 0 auto; background: whitesmoke; padding: 10px; }
-#container #list { width: 100%; text-align: center; }
-#container #list th { background: lightgray; }
-#container #list th, td { border: 1px solid black; padding: 5px; }
+#container { 
+	width: 1024px; height: 800px; margin: 0 auto; background: white; font-family: 돋움, Arial, sans-serif;
+	padding: 30px; color: #979797; font-size: 11px; }
+h3:before { content: "● "; color: #963D2A; }
+h3 { color: #646464; font-size: 21px; margin-bottom: 50px; }
+
+/* game list */
+#container #pageList { margin-bottom: 20px; text-align: center; }
+#container table { width: 100%; text-align: left; border-top: 2px solid #963D2A;}
+#container table th { background: #f5f5f5; text-align: center; }
+#container table th, td { border-bottom: 1px solid #e9e9e9; padding: 5px; box-sizing: border-box;}
+#container .align-center { text-align: center; }
+#container #inputName { border: 1px solid #e9e9e9; border-radius: 3px; box-sizing: border-box; width: 538px; height: 24px; }
+
+/* button */
+#list-control { width: 100%; height: 30px; text-align: center; }
+#list-control input { 
+	width: 71px; height: 23px; background: #963D2A; border-radius: 3px;
+	color: white; border: none; padding: 3px 8px; margin-left: 5px; font-size: 11px; font-weight: bold;}
+#list-control input:hover { text-decoration: underline; background: #AC3D2A; }
+
 </style>
-<script type="text/javascript">
-	window.onload = function() {
-		
+<script type="text/javascript">	
+	var g_name = "<%=g_name%>";
+	if(g_name != "") {
+		alert("등록 성공");
+		if(confirm("등록성공\n조회페이지로이동")){
+			location.href="gameManager.jsp";
+		}
 	}
 </script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
 
-	<!-- ------------------- <GAME LIST> --------------------------------------- -->
-	
 	<div id="container">
-		<form method="get">
-		<table id="list">
+	
+	<!-- ------------------- <게임등록> --------------------------------------- -->
+	
+		<h3>게임등록</h3>
+		<form method="post">
+		<div id="pageList">
+		<table class="list">
 			<colgroup>
-				<col width="3%">
-				<col width="17%">
 				<col width="30%">
-				<col width="30%">
-				<col width="10%">
-				<col width="10%">
+				<col width="70%">
 			</colgroup>
-			<thead>
-				<tr>
-					<th><input type="checkbox" name="all_check"></th><th>게임명</th><th>이미지경로</th><th>게임링크</th><th>플레이횟수</th><th>등록일</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				<label for="check"></label>
-				<%for(Game g : gameList) { %>
-				<tr>
-					<td><input type="checkbox" name="check" value="<%=g.getG_name() %>"></td>
-					<td><%=g.getG_name() %></td>
-					<td><%=g.getG_imgPath() %></td>
-					<td><%=g.getG_link() %></td>
-					<td><%=g.getG_cnt() %></td>
-					<td><%=g.getG_date() %></td>
-				</tr>
-				<%} %>
-			</tbody>
+			<tr><th>게임명</th><td><input id="inputName" type="text" name="g_name"></td></tr>
+			<tr><th>이미지파일</th><td><input id="inputImgPath" type="file" name="g_imgPath"></td></tr>
+			<tr><th>게임링크</th><td><input id="inputLink" type="file" name="g_link"></td></tr>
 		</table>
+		</div>
 		
 		<!-- button -->
 		
 		<div id="list-control">
-			<input class="button" type="submit" value="삭제"/>
+			<input class="button" type="submit" value="등록"/>
+			<input class="button" type="button" value="취소" onclick="location.href='gameManager.jsp'"/>
 		</div>
-		
-		</form>
-			
-		<!-- ------------------- <HOT GAME LIST> --------------------------------------- -->
-			
-			
 	</div>
 	
 	<%@ include file="footer.jsp" %>

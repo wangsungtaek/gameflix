@@ -94,3 +94,7 @@ DROP table G_GAME;
 DELETE FROM G_BADGE WHERE g_name = '3번게임';
 DELETE FROM G_PLAYLOG WHERE g_name = '3번게임';
 DELETE FROM G_GAME WHERE g_name = '3번게임';
+------------------------------------------------------------------------------
+
+-- insert
+INSERT INTO G_GAME VALUES('4번게임',SYSDATE,0,'','');

@@ -13,6 +13,12 @@ public class Game {
 	public Game() {
 
 	}
+	
+	public Game(String g_name, String g_imgPath, String g_link) {
+		this.g_name = g_name;
+		this.g_imgPath = g_imgPath;
+		this.g_link = g_link;
+	}
 
 	public Game(String g_name, String g_date_s, int g_cnt, String g_imgPath, String g_link) {
 		this.g_name = g_name;

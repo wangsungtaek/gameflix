@@ -37,6 +37,25 @@ public class GameService {
 		}
 	}
 
+	public void insertGame(Game game) {
+		
+		String sql = "INSERT INTO G_GAME VALUES(?,SYSDATE,0,?,?)";
+		try {
+			setCon();
+			prst = conn.prepareStatement(sql);
+			prst.setString(1, game.getG_name());
+			prst.setString(2, game.getG_imgPath());
+			prst.setString(3, game.getG_link());
+			prst.execute();
+
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public ArrayList<Game> getGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
 		
@@ -66,11 +85,11 @@ public class GameService {
 		return list;
 	}
 
-	public ArrayList<Game> getGameList(int page) {
+	public ArrayList<Game> getGameList(int page, int cnt) {
 		ArrayList<Game> list = new ArrayList<Game>();
 		
-		int start = 1 + (page-1)*3; // 1 4 7 10
-		int end = page * 3; // 3 6 9 12 15
+		int start = 1 + (page-1)*cnt; // 1 4 7 10
+		int end = page * cnt; // 3 6 9 12 15
 		
 		String sql = "SELECT * FROM GAME_VIEW WHERE num BETWEEN ? AND ?";
 		try {
@@ -99,6 +118,8 @@ public class GameService {
 		}
 		return list;
 	}
+
+	
 	
 	public ArrayList<Game> getHotGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();

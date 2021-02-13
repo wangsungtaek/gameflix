@@ -26,7 +26,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	GameService service = new GameService();
 	ArrayList<Game> hotGame = service.getHotGameList();
 	ArrayList<Game> newGame = service.getNewGameList();
-	ArrayList<Game> allGame = service.getGameList(gamePage);
+	ArrayList<Game> allGame = service.getGameList(gamePage, 3);
 	
 	int dbCnt = service.getCount();
 	int pageNum = (dbCnt%3 == 0) ?  (dbCnt/3) : (dbCnt/3)+1;
@@ -46,8 +46,10 @@ body{background-image: url(img/01.jpg);}
 #container > #main-content > .gameList .gameInfo { font-size: 1.2em; padding-left: 10px; font-weight: bold; }
 #container > #main-content > .gameList .gameInfo > span { float: right; font-size: 14px; line-height: 1.7; color: lightgray;}
 #container > #main-content > .gameList .gameInfo:after { content: ""; clear: both; display: block; }
-#container > #main-content > .gameList img { width: 300px; border-radius: 10px; border: 0.2px solid lightgray; transition: 0.5s; margin-bottom: 10px; }
-#container > #main-content > .gameList img:hover { width: 330px; }
+#container > #main-content > .gameList img {
+	width: 300px; height: 220px; border-radius: 10px; border: 0.2px solid lightgray; 
+	transition: 0.5s; margin-bottom: 10px; }
+#container > #main-content > .gameList img:hover { width: 320px; height: 240px;}
 
 #container > #main-content > .page-btn { text-align: center; margin-bottom: 30px;}
 #container > #main-content > .page-btn li { margin: 10px; display: inline; }
@@ -95,7 +97,7 @@ body{background-image: url(img/01.jpg);}
 	<div id="container">
 	
 		<div id="gameInsert-link">
-			<a href="insertGame.jsp">게임등록</a>
+			<a href="gameManager.jsp">게임관리</a>
 		</div>
 
 		<!-- ------------------- <HOT GAME LIST> --------------------------------------- -->
@@ -107,7 +109,7 @@ body{background-image: url(img/01.jpg);}
 				<ul class="item">
 					<%for (Game g : hotGame) { %>
 					<li>
-						<a href="<%=g.getG_link()%>"> <img src="<%=g.getG_imgPath()%>">
+						<a href="<%=g.getG_link()%>"> <img src="<%=g.getG_imgPath()%>" onerror="this.src='img/default.png'">
 							<div class="gameInfo">
 								<%=g.getG_name()%><span>플레이횟수 : <%=g.getG_cnt()%></span>
 							</div>
@@ -119,7 +121,6 @@ body{background-image: url(img/01.jpg);}
 
 
 		<!-- ------------------- <NEW GAME LIST> --------------------------------------- -->
-			
 			<h2 class="hidden">최신 등록 게임 리스트</h2>
 			<div id="newGameList" class="gameList">
 				<h3>최신게임</h3>
@@ -127,7 +128,7 @@ body{background-image: url(img/01.jpg);}
 					<%for(Game g : newGame) { %>
 					<li>
 						<a href="<%=g.getG_link() %>">
-							<img src="<%=g.getG_imgPath() %>">
+							<img src="<%=g.getG_imgPath() %>" onerror="this.src='img/default.png'">
 							<div class="gameInfo">
 								<%=g.getG_name() %><span>등록일 : <%=g.getG_date() %></span>
 							</div>
@@ -146,7 +147,7 @@ body{background-image: url(img/01.jpg);}
 					<%for(Game g : allGame) { %>
 					<li>
 						<a href="<%=g.getG_link() %>">
-							<img src="<%=g.getG_imgPath() %>">
+							<img src="<%=g.getG_imgPath() %>" onerror="this.src='img/default.png'">
 							<div class="gameInfo">
 								<%=g.getG_name() %><span>등록일 : <%=g.getG_date() %></span>
 							</div>
