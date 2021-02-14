@@ -177,8 +177,12 @@ public class GameService {
 		
 		int start = 1 + (page-1)*cnt; // 1 4 7 10
 		int end = page * cnt; // 3 6 9 12 15
-		
-		String sql = "SELECT * FROM NEWGAME WHERE num BETWEEN ? AND ?";
+		String sql="SELECT * FROM ( \r\n"
+				+ "	SELECT ROWNUM num, s.* FROM (\r\n"
+				+ "		SELECT * FROM G_GAME ORDER BY G_DATE DESC\r\n"
+				+ "		) s\r\n"
+				+ ")\r\n"
+				+ "WHERE num BETWEEN ? AND ?";
 		try {
 			setCon();
 			prst = conn.prepareStatement(sql);
@@ -209,7 +213,12 @@ public class GameService {
 	// 인기게임 3개
 	public ArrayList<Game> getHotGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
-		String sql = "SELECT * FROM HOTGAME WHERE NUM IN(1,2,3)";
+		String sql = "SELECT * FROM (\r\n"
+				+ "	SELECT ROWNUM num, s.* FROM (\r\n"
+				+ "		SELECT * FROM G_GAME ORDER BY g_cnt DESC\r\n"
+				+ "	) s\r\n"
+				+ ")\r\n"
+				+ "WHERE NUM IN(1,2,3)";
 		try {
 			setCon();
 			prst = conn.prepareStatement(sql);
@@ -238,7 +247,12 @@ public class GameService {
 	// 신규게임 3개
 	public ArrayList<Game> getNewGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
-		String sql = "SELECT * FROM NEWGAME WHERE NUM IN(1,2,3)";
+		String sql = "SELECT * FROM ( \r\n"
+				+ "	SELECT ROWNUM num, s.* FROM (\r\n"
+				+ "		SELECT * FROM G_GAME ORDER BY G_DATE DESC\r\n"
+				+ "		) s\r\n"
+				+ ")\r\n"
+				+ "WHERE NUM IN(1,2,3)";
 		try {
 			setCon();
 			prst = conn.prepareStatement(sql);
@@ -311,12 +325,5 @@ public class GameService {
 	public static void main(String[] args) {
 		GameService service = new GameService();
 		
-		service.createTable("G_MEMBER");
-		service.createTable("G_GAME");
-		service.createTable("G_PLAYLOG");
-		service.createTable("G_BADGE");
-		
-		service.createView("NEWGAME");
-		service.createView("HOTGAME");
 	}
 }

@@ -17,8 +17,6 @@
 	service.createTable("G_GAME");
 	service.createTable("G_BADGE");
 	service.createTable("G_PLAYLOG");
-	service.createView("NEWGAME");
-	service.createView("HOTGAME");
 	
 	// 리스트 읽어오기
 	ArrayList<Game> hotGame = service.getHotGameList();
