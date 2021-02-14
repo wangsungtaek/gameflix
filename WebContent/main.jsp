@@ -13,6 +13,7 @@
 	
 	// DB 테이블 및 뷰 생성
 	GameService service = new GameService();
+	service.createTable("G_MEMBER");
 	service.createTable("G_GAME");
 	service.createTable("G_BADGE");
 	service.createTable("G_PLAYLOG");
@@ -144,7 +145,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 		<aside id="side-banner">
 			<div id="ranking-box">
 				<h2>유저랭킹 TOP5</h2>
-				<a href="#">랭킹게시판</a>
+				<a href="ranking.jsp">랭킹게시판</a>
 				<table>
 					<colgroup>
 						<col style="width: 50%"/>

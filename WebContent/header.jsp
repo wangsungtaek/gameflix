@@ -71,8 +71,8 @@ ArrayList<Game> menuList = Service2.getGameList();
 	<h2 class="hidden">유틸메뉴</h2>
 	<div class="util">
 		<ul class="util-list">
-			<li><a href="#">LOGOUT</a></li>
-			<li><a href="#">MYPAGE</a></li>
+			<li><a href="login.jsp">LOGOUT</a></li>
+			<li><a href="UserInfo.jsp">MYPAGE</a></li>
 			<li><button onclick="search()"><i class="fas fa-search"></i></button>
 		</ul>
 		<div class="util-search">

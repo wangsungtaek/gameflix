@@ -3,6 +3,9 @@
     import="java.util.*"
     import="jspexp.z01_vo.*"
     %>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
+integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
 <style>
 #main-footer { background-color: rgba(0,0,0,0.4); width: 1024px; margin: 0 auto; }
 #main-footer > #footer-container {margin: 0 auto; width: 1024px; padding: 40px; font-size: 12px; color: rgb(180, 180, 180);}

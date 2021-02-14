@@ -41,7 +41,17 @@ public class GameService {
 	// 게임 테이블 생성
 	public void createTable(String name) {
 		String sql = "";
-		if(name.equals("G_GAME")) {
+		
+		if(name.equals("G_MEMBER")) {
+			sql = "CREATE TABLE G_MEMBER (\n"
+					+ "	m_no NUMBER CONSTRAINT g_member_pk PRIMARY KEY,\n"
+					+ "	m_id VARCHAR2(30) CONSTRAINT g_member_id_nn NOT NULL,\n"
+					+ "	m_pw VARCHAR2(30) CONSTRAINT g_member_pw_nn NOT NULL,\n"
+					+ "	m_name VARCHAR2(30) CONSTRAINT g_member_name_nn NOT NULL,\n"
+					+ "	m_email VARCHAR2(50) CONSTRAINT g_member_email_nn NOT NULL,\n"
+					+ "	m_nickname VARCHAR2(30) CONSTRAINT g_member_nickname NOT NULL\n"
+					+ ")";
+		} else if(name.equals("G_GAME")) {
 			sql = "CREATE TABLE G_GAME (\n"
 					+ "	g_name VARCHAR2(30) PRIMARY KEY,\n"
 					+ "	g_date DATE NOT NULL,\n"
@@ -300,8 +310,13 @@ public class GameService {
 	
 	public static void main(String[] args) {
 		GameService service = new GameService();
+		
+		service.createTable("G_MEMBER");
 		service.createTable("G_GAME");
-		service.createTable("G_BADGE");
 		service.createTable("G_PLAYLOG");
+		service.createTable("G_BADGE");
+		
+		service.createView("NEWGAME");
+		service.createView("HOTGAME");
 	}
 }
