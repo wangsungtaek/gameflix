@@ -8,6 +8,7 @@ CREATE TABLE G_MEMBER (
 	m_email VARCHAR2(50) CONSTRAINT g_member_email_nn NOT NULL,
 	m_nickname VARCHAR2(30) CONSTRAINT g_member_nickname NOT NULL
 );
+
 CREATE SEQUENCE g_member_no_seq;
 SELECT * FROM G_MEMBER;
 
@@ -30,7 +31,7 @@ CREATE TABLE G_PLAYLOG (
 );
 CREATE SEQUENCE g_playlog_no_seq;
 SELECT * FROM G_PLAYLOG;
-
+SELECT g_playlog_no_seq.nextval FROM DUAL;
 -- 생성 : 뱃지
 CREATE TABLE G_BADGE (
 	b_grade NUMBER CONSTRAINT g_badge_pk PRIMARY KEY,

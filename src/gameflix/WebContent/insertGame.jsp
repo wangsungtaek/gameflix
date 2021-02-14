@@ -4,7 +4,23 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-%>    
+
+	// request
+	String g_name = request.getParameter("g_name"); if(g_name == null) g_name="";
+	String g_imgPath = request.getParameter("g_imgPath"); if(g_imgPath == null) g_imgPath="";
+	String g_link = request.getParameter("g_link"); if(g_link == null) g_link="";
+
+	// DB
+	GameService service = new GameService();
+	ArrayList<Game> gameList = service.getGameList();
+	
+	// 게임등록
+	if(g_name != null && g_imgPath != null && g_link != null &&
+	   !g_name.equals("") && !g_imgPath.equals("") && !g_link.equals("")) {
+		String dafaultImgPath = "img/game/";
+		service.insertGame(new Game(g_name, dafaultImgPath+g_imgPath, g_link));
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,34 +30,12 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 <link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="css/gamenotice.css">
 
-<%	
-	GameService service = new GameService();
-	ArrayList<Game> gameList = service.getGameList();
-	String g_name = request.getParameter("g_name"); if(g_name == null) g_name="";
-	String g_imgPath = request.getParameter("g_imgPath");
-	String g_link = request.getParameter("g_link");
-	
-	// 삽입
-	if(g_name != null && g_imgPath != null && g_link != null &&
-	   !g_name.equals("") && !g_imgPath.equals("") && !g_link.equals("")) {
-		String dafaultImgPath = "img/game/";
-		service.insertGame(new Game(g_name, dafaultImgPath+g_imgPath, g_link));
-	}
-%>
 <style>
-body {background-image: url(img/01.jpg);}  
-#container { 
-	width: 1024px; height: 800px; margin: 0 auto; background: white; font-family: 돋움, Arial, sans-serif;
-	padding: 30px; color: #979797; font-size: 11px; }
-h3:before { content: "● "; color: #963D2A; }
-h3 { color: #646464; font-size: 21px; margin-bottom: 50px; }
 
 /* game list */
 #container #pageList { margin-bottom: 20px; text-align: center; }
-#container table { width: 100%; text-align: left; border-top: 2px solid #963D2A;}
-#container table th { background: #f5f5f5; text-align: center; }
-#container table th, td { border-bottom: 1px solid #e9e9e9; padding: 5px; box-sizing: border-box;}
 #container .align-center { text-align: center; }
 #container #inputName { border: 1px solid #e9e9e9; border-radius: 3px; box-sizing: border-box; width: 538px; height: 24px; }
 
@@ -55,8 +49,10 @@ h3 { color: #646464; font-size: 21px; margin-bottom: 50px; }
 </style>
 <script type="text/javascript">	
 	var g_name = "<%=g_name%>";
-	if(g_name != "") {
-		alert("등록 성공");
+	var g_imgPath = "<%=g_imgPath%>";
+	var g_link = "<%=g_link%>";
+	
+	if(g_name != "" && g_imgPath != "" && g_link != "") {
 		if(confirm("등록성공\n조회페이지로이동")){
 			location.href="gameManager.jsp";
 		}
@@ -78,9 +74,17 @@ h3 { color: #646464; font-size: 21px; margin-bottom: 50px; }
 				<col width="30%">
 				<col width="70%">
 			</colgroup>
-			<tr><th>게임명</th><td><input id="inputName" type="text" name="g_name"></td></tr>
-			<tr><th>이미지파일</th><td><input id="inputImgPath" type="file" name="g_imgPath"></td></tr>
-			<tr><th>게임링크</th><td><input id="inputLink" type="file" name="g_link"></td></tr>
+			<tr>
+				<th>게임명</th>
+				<td><input id="inputName" type="text" name="g_name" value="<%=g_name%>"></td>
+			</tr>
+			<tr>
+				<th>이미지파일</th>
+				<td><input id="inputImgPath" type="file" name="g_imgPath"></td>
+			</tr>
+			<tr>
+				<th>게임링크</th><td><input id="inputLink" type="file" name="g_link"></td>
+			</tr>
 		</table>
 		</div>
 		

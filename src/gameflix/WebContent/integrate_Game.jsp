@@ -85,7 +85,7 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 #game-container > #game-area > .bottom-area { display: flex; justify-content: center; }
 
 #game-container .bottle { padding: 20px; height: 200px;}
-#game-container img { width: 40px; height: 23px; display: block; margin-bottom: -1px; }
+#game-container img { width: 40px; height: 23px; display: block; margin-bottom: -2px; }
 
 #control { position: absolute; top: 100px; right: 30px;}
 #control > .level { font-size: 50px; margin-bottom: 20px; }
@@ -224,11 +224,11 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 				</li>
 			</ul>
 		</div>
-		<div id="control">
-			<div class="level">Level.1</div>
-			<div class="score">100점</div>
-			<button id="btn-start" onclick="gameStart()">GAME START</button>
-		</div>
+<!-- 		<div id="control"> -->
+<!-- 			<div class="level">Level.1</div> -->
+<!-- 			<div class="score">100점</div> -->
+<!-- 			<button id="btn-start" onclick="gameStart()">GAME START</button> -->
+<!-- 		</div> -->
 	</div>
 
 	<%@ include file="footer.jsp" %>

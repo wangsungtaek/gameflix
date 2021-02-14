@@ -10,9 +10,10 @@
 #main-footer > #footer-container > #left-info .title{ margin-bottom: 20px; }
 #main-footer > #footer-container > #right-info { margin-left: 100px; }
 #main-footer > #footer-container > #right-info > .tel { font-size: 30px; font-weight: 500; margin-right: 5px;}
-#main-footer > #footer-container > #right-info > button {
+#main-footer > #footer-container > #right-info > a {
+		text-align: center; line-height: 40px;
 		color: rgb(180, 180, 180); border: 1px solid gray; margin: 20px 10px 0 0; width: 100px; height: 40px;}
-#main-footer > #footer-container > #right-info > button:hover { color: white; border-color: white;}
+#main-footer > #footer-container > #right-info > a:hover { color: white; border-color: white;}
 </style>
 <!-- footer -->
 <footer id="main-footer">
@@ -37,8 +38,8 @@
 				운영시간 AM 09:00 ~ PM 18:00(주말 및 공휴일 휴무)<br>
 				점심시간 PM 12:00 ~ PM 13:00
 			</div>
-			<button>공지사항 ></button>
-			<button>Q&A ></button>
+			<a href="notice.jsp">공지사항 ></a>
+			<a href="QnA.jsp">Q&A</a>
 		</div>
 	</div>
 </footer>

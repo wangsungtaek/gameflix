@@ -1,13 +1,10 @@
 <%@page import="gameflix.web.service.GameService"%>
 <%@page import="gameflix.web.entity.Game"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    import="java.util.*"
-    import="jspexp.z01_vo.*"
-    %>
+	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 <%
 	GameService Service2 = new GameService();
-	ArrayList<Game> menuList = Service2.getGameList();	
+ArrayList<Game> menuList = Service2.getGameList();
 %>
 <style>
 .hidden { overflow: hidden; position: absolute; top: -9999px; left: -9999px; width: 1px; height: 0;}
@@ -33,7 +30,7 @@
 #main-head > #lnb li:hover { width:18%; background-color: rgba(220, 20, 60, 0.478); }
 #main-head > #lnb a { padding: 10px; font-size: 14px; color: white;
 					  display: block; text-align: center;}
-#main-head > #lnb a:hover { color: rgb(220, 220, 220);}
+#main-head > #lnb a:hover { color: rgb(220, 220, 220); cursor: pointer; }
 #main-head button {border: 0; outline: 0;}
 
 .menu { position: absolute; top: 80px; left: 190px; background: rgba(0,0,0,0.7); z-index: 1; display: none; }
@@ -98,7 +95,7 @@
 	<nav id="lnb">
 		<ul>
 			<li>
-				<a href="integrate_Game.jsp" onmouseover="menuDisplay('block')" onmouseout="menuDisplay('none')">
+				<a onmouseover="menuDisplay('block')" onmouseout="menuDisplay('none')">
 					게임리스트
 				</a>
 			</li>

@@ -20,7 +20,8 @@ public class GameService {
 	private Connection conn;
 	private PreparedStatement prst;
 	private ResultSet rs;
-		
+
+	// DB연결
 	private void setCon() {
 		
 		try {
@@ -37,6 +38,80 @@ public class GameService {
 		}
 	}
 
+	// 게임 테이블 생성
+	public void createTable(String name) {
+		String sql = "";
+		if(name.equals("G_GAME")) {
+			sql = "CREATE TABLE G_GAME (\n"
+					+ "	g_name VARCHAR2(30) PRIMARY KEY,\n"
+					+ "	g_date DATE NOT NULL,\n"
+					+ "	g_cnt NUMBER NOT NULL,\n"
+					+ "	g_imgPath VARCHAR2(100) NOT NULL,\n"
+					+ "	g_link VARCHAR2(100) NOT NULL\n"
+					+ ")";
+		} else if(name.equals("G_BADGE")) {
+			sql = "CREATE TABLE G_BADGE (\n"
+					+ "	b_grade NUMBER PRIMARY KEY,\n"
+					+ "	g_name VARCHAR2(30) REFERENCES G_GAME(g_name),\n"
+					+ "	b_score NUMBER NOT NULL,\n"
+					+ "	b_path VARCHAR2(100) NOT NULL\n"
+					+ ")";
+		} else if(name.equals("G_PLAYLOG")) {
+			sql = "CREATE TABLE G_PLAYLOG (\n"
+					+ "	play_no NUMBER PRIMARY KEY,\n"
+					+ "	m_no NUMBER REFERENCES G_MEMBER(m_no),\n"
+					+ "	g_name VARCHAR2(30) REFERENCES G_GAME(g_name),\n"
+					+ "	p_score NUMBER NOT NULL\n"
+					+ ")";
+		}
+		System.out.println(sql);
+		try {
+			setCon();
+			prst = conn.prepareStatement(sql);
+			prst.execute();
+
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// 게임 뷰 생성
+	public void createView(String name) {
+		String	sql = "";
+		if(name.equals("NEWGAME")) {
+			sql = "CREATE VIEW NEWGAME\n"
+					+ "AS\n"
+					+ "SELECT * FROM ( \n"
+					+ "	SELECT ROWNUM num, s.* FROM (\n"
+					+ "		SELECT * FROM G_GAME ORDER BY G_DATE DESC\n"
+					+ "		) s\n"
+					+ ")";
+		} else if(name.equals("HOTGAME")) {
+			sql = "CREATE VIEW HOTGAME\n"
+					+ "AS\n"
+					+ "SELECT * FROM (\n"
+					+ "	SELECT ROWNUM num, s.* FROM (\n"
+					+ "		SELECT * FROM G_GAME ORDER BY g_cnt DESC\n"
+					+ "	) s\n"
+					+ ")";
+		}
+		try {
+			setCon();
+			prst = conn.prepareStatement(sql);
+			prst.execute();
+
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	// 게임 추가
 	public void insertGame(Game game) {
 		
 		String sql = "INSERT INTO G_GAME VALUES(?,SYSDATE,0,?,?)";
@@ -56,6 +131,7 @@ public class GameService {
 		}
 	}
 	
+	// 전체 게임 읽기
 	public ArrayList<Game> getGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
 		
@@ -85,13 +161,14 @@ public class GameService {
 		return list;
 	}
 
+	// 페이지별 게임 읽기
 	public ArrayList<Game> getGameList(int page, int cnt) {
 		ArrayList<Game> list = new ArrayList<Game>();
 		
 		int start = 1 + (page-1)*cnt; // 1 4 7 10
 		int end = page * cnt; // 3 6 9 12 15
 		
-		String sql = "SELECT * FROM GAME_VIEW WHERE num BETWEEN ? AND ?";
+		String sql = "SELECT * FROM NEWGAME WHERE num BETWEEN ? AND ?";
 		try {
 			setCon();
 			prst = conn.prepareStatement(sql);
@@ -118,9 +195,8 @@ public class GameService {
 		}
 		return list;
 	}
-
 	
-	
+	// 인기게임 3개
 	public ArrayList<Game> getHotGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
 		String sql = "SELECT * FROM HOTGAME WHERE NUM IN(1,2,3)";
@@ -149,6 +225,7 @@ public class GameService {
 		return list;
 	}
 	
+	// 신규게임 3개
 	public ArrayList<Game> getNewGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
 		String sql = "SELECT * FROM NEWGAME WHERE NUM IN(1,2,3)";
@@ -177,6 +254,7 @@ public class GameService {
 		return list;
 	}
 	
+	// 등록된 게임 갯수
 	public int getCount() {
 		String sql = "SELECT count(*) cnt FROM G_GAME";
 		int cnt=0;
@@ -198,6 +276,7 @@ public class GameService {
 		return cnt;
 	}
 	
+	// 게임삭제
 	public void deleteGame(String name) {
 		String[] sql = {
 			"DELETE FROM G_BADGE WHERE g_name = ?",
@@ -219,10 +298,10 @@ public class GameService {
 		}
 	}
 	
-	
-	
 	public static void main(String[] args) {
 		GameService service = new GameService();
-		
+		service.createTable("G_GAME");
+		service.createTable("G_BADGE");
+		service.createTable("G_PLAYLOG");
 	}
 }
