@@ -25,7 +25,7 @@ ArrayList<Game> menuList = Service2.getGameList();
 
 #main-head > #lnb { position: relative; left: 200px; bottom: 90px; width: 500px}
 #main-head > #lnb ul { display: flex; margin-top: 50px; }
-#main-head > #lnb li { background: transparent; width: 16.666%; transition: 0.5s;
+#main-head > #lnb li { background: transparent; width: 20%; transition: 0.5s;
 					   border-radius: 20px; flex-shrink: 0; }
 #main-head > #lnb li:hover { width:18%; background-color: rgba(220, 20, 60, 0.478); }
 #main-head > #lnb a { padding: 10px; font-size: 14px; color: white;
