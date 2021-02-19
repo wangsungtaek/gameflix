@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*" 
-    import="jspexp.z01_vo.*"
+    import="gameflix.web.entity.Member"
+    import="gameflix.web.service.loginService"
 %>
 <% request.setCharacterEncoding("UTF-8");
    String path = request.getContextPath();
@@ -85,9 +86,18 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	window.onload=function(){
       
 	};
+
 </script>
 </head>
 <body>
+	<%
+	String id=request.getParameter("id");
+	String email=request.getParameter("email");
+	if(id==null) id="";
+	if(email==null) email="";
+	
+	%>
+	
 	<div class="idfindresult_content">
 		<!-- 로고 이미지 -->
 		<img src="img/logo.png" id="logo">
@@ -96,8 +106,8 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 			<table id="idfind_result_tab">
 				<col width="50%"><col width="50%">
 				<tr><th colspan="2">아이디 찾기 결과</th></tr>
-				<tr><td colspan="2">아이디 <span>@@@</span></td></tr>
-				<tr><td colspan="2">닉네임 <span>@@@</span></td></tr>
+				<tr><td>아이디</td><td><span><%=id %></span></td></tr>
+				<tr><td>닉네임</td><td><span><%=email %></span></td></tr>
 				<tr><td><a href="login.jsp"><input type="button" value="LOGIN"></a></td>
 					<td><a href="passfind.jsp"><input type="button" value="비밀번호 찾기"></a></td></tr>
 			</table>

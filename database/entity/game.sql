@@ -27,6 +27,8 @@ SELECT * FROM (
 )
 WHERE num BETWEEN 1 AND 10;
 
+
+
 -- 뷰 생성
 CREATE VIEW GAME_VIEW
 AS
@@ -35,6 +37,7 @@ SELECT * FROM (
 		SELECT * FROM G_GAME ORDER BY G_DATE DESC
 		) s
 );
+
 
 -- 뷰를 사용한 간단한 조회 가능
 SELECT * FROM GAME_VIEW WHERE num BETWEEN 1 AND 3;

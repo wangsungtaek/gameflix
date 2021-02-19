@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*" 
-    import="jspexp.z01_vo.*"
+    import="gameflix.web.entity.Member"
+    import="gameflix.web.service.loginService"
 %>
 <% request.setCharacterEncoding("UTF-8");
    String path = request.getContextPath();
@@ -129,9 +130,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	window.onload=function(){
       
 	};
-	function join_check(){
-		alert("회원가입을 축하드립니다.\n로그인 페이지로 이동합니다.");
-	}
+
 </script>
 </head>
 <body>
@@ -141,13 +140,13 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
   		<!-- 회원가입 페이지 --> 
 		<div class="content_join">
 			<h2>회원가입</h2>
-			<form>
+			<form method="post"> 
 				<table id="join_table">
 					<col width="30%"><col width="70%">
 					<tr><th>아이디</th><td><input type="text" name="id" class="input">&nbsp;&nbsp;<span class="input_op">(4~16자)</span></td></tr>
 					<tr><th>비밀번호</th>
-						<td><input type="password" name="pass" class="input">&nbsp;&nbsp;<span class="input_op">(8자~16자)</span></td></tr>
-					<tr><th>비밀번호 확인</th><td><input type="password" name="pass" class="input"></td></tr>
+						<td><input type="password" name="pass1" class="input">&nbsp;&nbsp;<span class="input_op">(8자~16자)</span></td></tr>
+					<tr><th>비밀번호 확인</th><td><input type="password" name="pass2" class="input"></td></tr>
 					<tr><th>이름<td><input type="text" name="name" class="input"></td></tr>
 					<tr><th>이메일</th><td><input type="email" name="email" class="input"></td></tr>
 					<tr><th>닉네임</th><td><input type="text" name="nickname" class="input"></td></tr>
@@ -164,7 +163,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 					3. 회원이라 함은 "회사"에 개인정보를 제공하여 회원 등록을 한 자로서, "회사"의 정보를 지속적으로 제공받으며, "회사"가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.<br>
 					4. 이외에 이 약관에서 사용하는 용어의 정의는 관계 법령 및 서비스 별 안내에서 정하는 바에 의합니다.
 					</div></td></tr>
-					<tr><td class="agree_check">이용약관에 동의하십니까? <input type="checkbox"> 동의함</td></tr>	
+					<tr><td class="agree_check">이용약관에 동의하십니까? <input type="checkbox" id="chbx"> 동의함</td></tr>	
 					<tr><th>&nbsp;- [필수] 개인정보 수집 및 이용 동의</th></tr>
 					<tr><td><div class="agree_text">게임플릭스는 (이하 "회사"는) 고객님의 개인정보를 중요시하며, "정보통신망 이용촉진 및 정보보호"에 관한 법률을 준수하고 있습니다.<br>
 					회사는 개인정보취급방침을 통하여 고객님께서 제공하시는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.<br><br>
@@ -179,15 +178,141 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 					o 회원 관리<br>
 					회원제 서비스 이용에 따른 본인확인, 개인 식별, 불량회원의 부정 이용 방지와 비인가 사용 방지, 가입 의사 확인, 불만처리 등 민원처리, 고지사항 전달<br>
 					</div></td></tr>
-				<tr><td class="agree_check">개인정보 수집 및 이용에 동의하십니까? <input type="checkbox"> 동의함</td></tr>	
+				<tr><td class="agree_check">개인정보 수집 및 이용에 동의하십니까? <input type="checkbox" id="chbx"> 동의함</td></tr>	
 			</table>
-		
+				
 			<div id="join_button">
-				<a href="login.jsp"><input type="button" value="JOIN" id="join_button2" onclick="join_check()"></a>
+				<input type="button" value="JOIN" id="join_button2" onclick="join_check()">
 			</div>
 		</div> 
 	</div>
 	<%@ include file="footer.jsp"  %>
 	
 </body>
+<script>
+<%
+String id=request.getParameter("id"); if(id==null) id=""; log("#id:"+id);
+String pw=request.getParameter("pass1"); if(pw==null) pw=""; log("#pw:"+pw);
+String name=request.getParameter("name"); if(name==null) name=""; log("#name:"+name);
+String email=request.getParameter("email"); if(email==null) email=""; log("#email:"+email);
+String nickname=request.getParameter("nickname"); if(nickname==null) nickname=""; log("#nickname:"+nickname);
+loginService dao=new loginService();
+if(!id.equals("")){
+	Member ins=new Member(0, id, pw, name, email, nickname);
+	dao.join(ins);
+}
+ArrayList<Member> mlist=dao.memList();
+%>
+
+
+	function join_check(){
+		var idObj=document.querySelector("[name=id]");
+		var pass1Obj=document.querySelector("[name=pass1]");
+		var pass2Obj=document.querySelector("[name=pass2]");
+		var nameObj=document.querySelector("[name=name]");
+		var emailObj=document.querySelector("[name=email]");
+		var nicknameObj=document.querySelector("[name=nickname]");
+		var checkboxObj=document.querySelectorAll("#chbx");
+		if(idObj.value==""){
+			alert("id를 입력하세요.");
+			idObj.focus();
+			return false;
+		} else{
+	        if(idObj.value.length<4 || idObj.value.length>16){
+	       		alert("4~16글자로 입력하세요.");
+	       		idObj.value="";
+	       		idObj.focus();
+	            return false;
+	        }else{
+	        	<%
+	        	for(Member m:mlist){
+	        	%>
+	        		if(idObj.value=='<%=m.getM_id()%>'){
+	        			alert("이미 존재하는 id입니다.");
+	        			idObj.value="";
+	        			idObj.focus();
+	    	            return false;
+	        		}
+	        	<%
+	        	}
+	        	%>
+	        }
+	    }
+		if(pass1Obj.value==""){
+			alert("password를 입력하세요.");
+			pass1Obj.focus();
+			return;
+		} else{
+	        if(pass1Obj.value.length<8 || pass1Obj.value.length>16  ){
+	       		alert("8~16글자로 입력하세요.");
+	       		pass1Obj.value="";
+	       		pass1Obj.focus();
+	       		return false;
+	        }
+	    }
+		if(pass2Obj.value==""){
+			alert("password를 입력하세요.");
+			pass2Obj.focus();
+			return false;
+		} else{
+	        if(pass2Obj.value.length<8 || pass2Obj.value.length>16  ){
+	       		alert("8~16글자로 입력하세요.");
+	       		pass2Obj.value="";
+				return false;
+	        }
+	    }
+		if(!(pass1Obj.value==pass2Obj.value)){
+			alert("비밀번호를 동일하게 입력해주세요");
+			pass1Obj.focus();
+			return false;
+		}
+		if(nameObj.value==""){
+			alert("이름을 입력하세요.");
+			nameObj.focus();
+			return false;
+		} 
+		if(emailObj.value==""){
+			alert("이메일을 입력하세요.");
+			emailObj.focus();
+			return false;
+		} 
+		if(nicknameObj.value==""){
+			alert("닉네임을 입력하세요.");
+			nicknameObj.focus();
+			return false;
+		}else{
+        	<%
+        	for(Member m:mlist){
+        	%>
+        	if(nicknameObj.value=='<%=m.getM_nickname()%>'){
+        			alert("이미 존재하는 닉네임입니다.");
+        			nicknameObj.value="";
+        			nicknameObj.focus();
+    	            return false;
+        		}
+        	<%
+        	}
+        	%>
+        }	
+		if(!checkboxObj[0].checked){
+			alert("이용약관을 동의해주세요");
+			checkboxObj[0].focus();
+            return false;
+		}
+		if(!checkboxObj[1].checked){
+			alert("개인정보 수집 및 이용동의를 해주세요");
+			checkboxObj[1].focus();
+            return false;
+		}
+		document.querySelector("form").submit();
+		
+	}
+	
+	var id="<%=id%>";
+	if(id!=""){
+		alert("회원가입을 축하드립니다.\n로그인 페이지로 이동합니다.");
+		location.href="login.jsp";
+	}
+
+</script>
 </html>
