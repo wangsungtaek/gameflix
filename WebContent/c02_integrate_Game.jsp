@@ -3,6 +3,35 @@
     import="java.util.*"
     import="gameflix.web.entity.*"
     %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String state = "";
+	String state_ = request.getParameter("state");
+	if(state_ != null && !state_.equals("")) state = state_;
+	if(state.equals("exit")){
+		
+		int point = 0;
+		int m_no = 0;
+		String gname = "";
+		
+		String gname_ = request.getParameter("gname");
+		String point_ = request.getParameter("point");
+		Object m_ = session.getAttribute("m");
+		
+		if(point_ != null && !point_.equals("") && m_ != null && gname_ != null && !gname_.equals("")) {
+			gname = gname_;
+			point = Integer.parseInt(point_);
+			Member m = (Member)m_;
+			m_no = m.getM_no();
+			if(point > 0 && m_no > 0) {
+				GameService service = new GameService();
+				service.addPlayLog(m_no, gname, point);
+			}
+		}
+		request.setAttribute("gname", gname);
+		request.getRequestDispatcher("c01_integrate_Start.jsp").forward(request, response);
+	}
+%>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String path = request.getContextPath();
@@ -77,21 +106,23 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 
 <style>
 body{background-image: url(img/01.jpg);}  
-#game-container { height: 800px; width: 1024px; margin: 0 auto; background: whitesmoke;  text-align: center; position: relative;}
+#game-container { height: 800px; width: 1024px; margin: 0 auto; background: whitesmoke;  text-align: center;}
 #game-container > label { margin-bottom: 50px; display: block; padding-top: 30px; vertical-align: top;}
 progress { width: 300px; height: 20px; padding-top: 5px;}
-#game-container > #game-area { width: 500px; padding-top: 100px; border: 0.5px solid lightgray; margin: 0 auto; border-radius: 5px;}
+#game-container > #game-area { 
+	width: 500px; padding-top: 100px; border: 0.5px solid lightgray; margin: 0 auto; border-radius: 5px;
+	position: relative; }
 #game-container > #game-area > .top-area { display: flex; justify-content: center; }
 #game-container > #game-area > .bottom-area { display: flex; justify-content: center; }
 
 #game-container .bottle { padding: 20px; height: 200px;}
 #game-container img { width: 40px; height: 23px; display: block; margin-bottom: -2px; }
 
-#control { position: absolute; top: 100px; right: 30px;}
-#control > .level { font-size: 50px; margin-bottom: 20px; }
-#control > .score { font-size: 30px; color: red; margin-bottom: 250px; }
-#control > #btn-start { background: gray; color: white; width: 200px; height: 50px; margin-top: 20px; }
-
+#game-container > #game-area > #control { position: absolute; top: 20px; right: 20px;}
+#game-container > #game-area > #control > .level { font-size: 50px; margin-bottom: 20px; }
+#game-container > #game-area > #control > .score { font-size: 30px; color: red; margin-bottom: 250px; }
+#game-container > #game-area > #control > #btn-start { background: gray; color: white; width: 200px; height: 50px; margin-top: 20px; }
+#game-container > #game-area > #control > #refresh i { font-size: 30px; position: absolute; top: 0px; left: -380px; }
 </style>
 <script type="text/javascript">
 	window.onload = function() {
@@ -157,10 +188,36 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 		}
 		if(result == true){
 			setTimeout(function() {
-				alert(result);	
+				var progress = document.querySelector("#timeOut");
+				var point = Number("${param.point}") + 100;
+				console.log(gname);
+ 				location.href='c02_integrate_Game.jsp?game=start&time='+progress.value+'&point='+point+'&gname='+gname;
 			}, 500);
 		}
-	}	
+	}
+	var state = "${param.game}";
+	var time = Number("${param.time}");
+	console.log(state);
+	if(state == "start") start();
+	function start(){ // 게임 시작
+		var timecnt=time;
+		var set05 = setInterval(function(){ // 1분 카운트 다운 진행바로 표시
+			if(timecnt==0) { 
+				clearInterval(set05);
+				startOver();
+			}
+			document.querySelector("#timeOut").value=--timecnt;
+		},1000);
+		function startOver(){
+			var point = "${param.point}";
+			var gname = "${param.gname}";
+			alert("게임종료 "+point+"점 흭득");
+			location.href='?state=exit&point='+point+'&gname='+gname;
+		}
+	}
+	function refresh() {
+		location.href='c02_integrate_Game.jsp?game=start&time=60&point=0&gname=${param.gname}';
+	}
 </script>
 </head>
 <!-- <body onload="showImage()"> -->
@@ -168,7 +225,7 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 	<%@ include file="header.jsp" %>
 
 	<div id="game-container">
-		<label>Time Out <progress id="timeOut" max="10" value="3"></progress></label>
+		<label>Time Out <progress id="timeOut" max="60" value="${(empty param.time)?60:param.time}"></progress></label>
 		<div id="game-area">
 		
 			<ul class="top-area">
@@ -224,12 +281,12 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 					<img class="piece" src="<%=bottles.get(6).getLayer1()%>" alt="<%=bottles.get(6).getColor_Layer1() %>">
 				</li>
 			</ul>
+			<div id="control">
+				<div>누적 포인트</div>
+				<div class="score">${param.point}</div>
+				<div id="refresh"><i class="fas fa-redo" onclick="refresh()"></i></div>
+			</div>
 		</div>
-<!-- 		<div id="control"> -->
-<!-- 			<div class="level">Level.1</div> -->
-<!-- 			<div class="score">100점</div> -->
-<!-- 			<button id="btn-start" onclick="gameStart()">GAME START</button> -->
-<!-- 		</div> -->
 	</div>
 
 	<%@ include file="footer.jsp" %>

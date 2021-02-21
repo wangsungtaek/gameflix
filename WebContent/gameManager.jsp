@@ -19,6 +19,7 @@
 	// db
 	GameService service = new GameService();
 	ArrayList<Game> pageGame = service.getGameList(gamePage, 10);
+	ArrayList<Game> hotGame = service.getHotGameList();
 	
 	int dbCnt = service.getCount();
 	int pageNum = (dbCnt%10 == 0) ?  (dbCnt/10) : (dbCnt/10)+1;
@@ -76,7 +77,6 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 				<col width="25%">
 				<col width="25%">
 				<col width="11%">
-				<col width="12%">
 				<col width="5%">
 			</colgroup>
 			<thead>
@@ -84,7 +84,6 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 					<th>게임명</th>
 					<th>이미지경로</th>
 					<th>게임링크</th>
-					<th>플레이횟수</th>
 					<th>등록일</th>
 					<th><input type="checkbox" name="all_check" onclick="allSelect()"></th>
 				</tr>
@@ -96,7 +95,6 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 					<td class="align-center"><%=g.getG_name() %></td>
 					<td><%=g.getG_imgPath() %></td>
 					<td><%=g.getG_link() %></td>
-					<td class="align-center"><%=g.getG_cnt() %></td>
 					<td class="align-center"><%=g.getG_date() %></td>
 					<td class="align-center">
 						<input class="checkBox" type="checkbox" name="check" value="<%=g.getG_name() %>" />

@@ -183,3 +183,77 @@ DROP TABLE G_BADGE;
 
 DROP VIEW NEWGAME;
 DROP VIEW HOTGAME;
+
+SELECT * FROM (
+SELECT ROWNUM num, g.* FROM(
+	SELECT * FROM G_GAME WHERE G_NAME LIKE '%%' ORDER BY G_DATE DESC
+) g)
+WHERE NUM BETWEEN 1 AND 10;
+
+SELECT * FROM G_MEMBER;
+SELECT * FROM G_PLAYLOG;
+SELECT * FROM G_GAME;
+
+CREATE SEQUENCE G_PLAYLOG_SEQ;
+
+INSERT INTO G_PLAYLOG
+VALUES(g_playlog_seq.nextval,7,'음료게임',100);
+INSERT INTO G_PLAYLOG
+VALUES(g_playlog_seq.nextval,7,'4번게임',100);
+INSERT INTO G_PLAYLOG
+VALUES(g_playlog_seq.nextval,7,'카드게임',100);
+INSERT INTO G_PLAYLOG
+VALUES(g_playlog_seq.nextval,7,'퀴즈게임',100);
+
+
+SELECT m_id
+  FROM G_MEMBER
+  
+  
+SELECT m.M_NAME, m.M_NO, SUM(P_SCORE)
+  FROM G_PLAYLOG g, G_MEMBER m
+GROUP BY m.M_NO, m_name;
+
+SELECT m.m_name
+  FROM G_PLAYLOG g, G_MEMBER m
+ HAVING m.m_no = (
+	SELECT m_no, sum(p_score)
+	 FROM G_PLAYLOG
+	GROUP BY m_no 
+ );
+SELECT rownum, n.*
+  FROM (
+	SELECT m.m_name,g.m_no, sum(p_score) s
+		 FROM G_PLAYLOG g, G_MEMBER m
+		WHERE g.M_NO = m.M_NO
+		GROUP BY g.m_no, m.m_name
+		ORDER BY s desc
+) n
+WHERE rownum BETWEEN 1 AND 5;
+
+SELECT * FROM G_PLAYLOG ;
+SELECT rownum, n.*
+  FROM (
+	SELECT m.m_name,g.m_no, sum(p_score) score
+		 FROM G_PLAYLOG g, G_MEMBER m
+		WHERE g.M_NO = m.M_NO
+		GROUP BY g.m_no, m.m_name
+		ORDER BY score desc
+) n
+WHERE rownum BETWEEN 1 AND 5;
+
+SELECT * FROM G_PLAYLOG;
+
+SELECT g_name, count(*)
+ FROM G_PLAYLOG
+GROUP BY g_name;
+
+
+SELECT rownum, g.* FROM (
+	SELECT p.g_name, count(*) cnt, g.G_IMGPATH, g.G_LINK 
+	  FROM G_PLAYLOG p, G_GAME g
+	 WHERE p.G_NAME = g.G_NAME
+	GROUP BY p.g_name, g.G_IMGPATH, g.G_LINK 
+	ORDER BY cnt DESC
+) g
+WHERE rownum IN(1,2,3);

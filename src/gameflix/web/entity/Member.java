@@ -16,6 +16,7 @@ public class Member {
 	private String m_name;
 	private String m_email;
 	private String m_nickname;
+	private int score;
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -29,7 +30,11 @@ public class Member {
 		this.m_email = m_email;
 		this.m_nickname = m_nickname;
 	}
-	
+	public Member(String m_name, int score) {
+		super();
+		this.m_name = m_name;
+		this.score = score;
+	}
 	public Member(String m_id) {
 		super();
 		this.m_id = m_id;
@@ -70,7 +75,10 @@ public class Member {
 	public void setM_nickname(String m_nickname) {
 		this.m_nickname = m_nickname;
 	}
-	
-	
-	
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 }

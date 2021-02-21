@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import gameflix.web.entity.Game;
+import gameflix.web.entity.Member;
 
 public class GameService {
 	private String driver = "oracle.jdbc.driver.OracleDriver";
@@ -213,12 +214,14 @@ public class GameService {
 	// 인기게임 3개
 	public ArrayList<Game> getHotGameList() {
 		ArrayList<Game> list = new ArrayList<Game>();
-		String sql = "SELECT * FROM (\r\n"
-				+ "	SELECT ROWNUM num, s.* FROM (\r\n"
-				+ "		SELECT * FROM G_GAME ORDER BY g_cnt DESC\r\n"
-				+ "	) s\r\n"
-				+ ")\r\n"
-				+ "WHERE NUM IN(1,2,3)";
+		String sql = "SELECT rownum, g.* FROM (\n"
+				+ "	SELECT p.g_name, count(*) cnt, g.G_IMGPATH, g.G_LINK \n"
+				+ "	  FROM G_PLAYLOG p, G_GAME g\n"
+				+ "	 WHERE p.G_NAME = g.G_NAME\n"
+				+ "	GROUP BY p.g_name, g.G_IMGPATH, g.G_LINK \n"
+				+ "	ORDER BY cnt DESC\n"
+				+ ") g\n"
+				+ "WHERE rownum IN(1,2,3)";
 		try {
 			setCon();
 			prst = conn.prepareStatement(sql);
@@ -226,11 +229,10 @@ public class GameService {
 			while(rs.next()) {
 				
 				String g_name = rs.getString("G_NAME");
-				Date g_date = rs.getDate("G_DATE");
-				int g_cnt = rs.getInt("G_CNT");
+				int g_cnt = rs.getInt("CNT");
 				String g_imgPath = rs.getString("G_IMGPATH");
 				String g_link = rs.getString("G_LINK");
-				Game game = new Game(g_name, g_date, g_cnt, g_imgPath, g_link);
+				Game game = new Game(g_name, g_cnt, g_imgPath, g_link);
 				list.add(game);
 			}
 			
@@ -277,6 +279,48 @@ public class GameService {
 		}
 		return list;
 	}
+
+	// 게임 검색
+	public ArrayList<Game> getSearchList() {
+		return getSearchList("",1);
+	}
+	public ArrayList<Game> getSearchList(int page) {
+		return getSearchList("",page);
+	}
+	public ArrayList<Game> getSearchList(String query, int page) {
+		ArrayList<Game> list = new ArrayList<Game>();
+		String sql = "SELECT * FROM (\n"
+				+ "SELECT ROWNUM num, g.* FROM(\n"
+				+ "	SELECT * FROM G_GAME WHERE G_NAME LIKE ? ORDER BY G_DATE DESC\n"
+				+ ") g)\n"
+				+ "WHERE NUM BETWEEN ? AND ?";
+		try {
+			setCon();
+			prst = conn.prepareStatement(sql);
+			prst.setString(1, "%"+query+"%");
+			prst.setInt(2, 1+(page-1)*5);
+			prst.setInt(3, page * 5);
+			
+			rs = prst.executeQuery();
+			while(rs.next()) {
+				Game game = new Game(rs.getInt("num"),
+									 rs.getString("g_name"),
+									 rs.getDate("g_date"),
+									 rs.getInt("g_cnt"),
+									 rs.getString("g_imgpath"),
+									 rs.getString("g_link"));
+				list.add(game);
+			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}	
 	
 	// 등록된 게임 갯수
 	public int getCount() {
@@ -321,9 +365,61 @@ public class GameService {
 			e.printStackTrace();
 		}
 	}
+
+	// 유저랭킹 top 5
+	public ArrayList<Member> getRangking() {
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		String sql = "SELECT rownum, n.*\n"
+				+ "  FROM (\n"
+				+ "	SELECT m.m_name,g.m_no, sum(p_score) score\n"
+				+ "		 FROM G_PLAYLOG g, G_MEMBER m\n"
+				+ "		WHERE g.M_NO = m.M_NO\n"
+				+ "		GROUP BY g.m_no, m.m_name\n"
+				+ "		ORDER BY score desc\n"
+				+ ") n\n"
+				+ "WHERE rownum BETWEEN 1 AND 5";
+		try {
+			setCon();
+			prst = conn.prepareStatement(sql);
+			rs = prst.executeQuery();
+			while(rs.next()) {
+				list.add(new Member(rs.getString("m_name"),rs.getInt("score")));
+			}
+			
+			rs.close();
+			prst.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		return list;
+	}
+	
+	// 게임 로그 추가
+	public void addPlayLog(int no, String game, int point) {
+		String sql = "INSERT INTO G_PLAYLOG VALUES(g_playlog_seq.nextval,?,?,?)";
+				
+			try {
+				setCon();
+				prst = conn.prepareStatement(sql);
+				prst.setInt(1, no);
+				prst.setString(2, game);
+				prst.setInt(3, point);
+				prst.executeUpdate();
+				
+				prst.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+	}
 	
 	public static void main(String[] args) {
-		GameService service = new GameService();
-		
+//		GameService service = new GameService();
+//		
 	}
 }

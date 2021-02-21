@@ -3,6 +3,7 @@ package gameflix.web.entity;
 import java.util.Date;
 
 public class Game {
+	private int g_num;
 	private String g_name;
 	private Date g_date;
 	private String g_date_s;
@@ -16,6 +17,24 @@ public class Game {
 	
 	public Game(String g_name, String g_imgPath, String g_link) {
 		this.g_name = g_name;
+		this.g_imgPath = g_imgPath;
+		this.g_link = g_link;
+	}
+	
+	public Game(String g_name, int g_cnt, String g_imgPath, String g_link) {
+		super();
+		this.g_name = g_name;
+		this.g_cnt = g_cnt;
+		this.g_imgPath = g_imgPath;
+		this.g_link = g_link;
+	}
+
+	public Game(int g_num, String g_name, Date g_date, int g_cnt, String g_imgPath, String g_link) {
+		super();
+		this.g_num = g_num;
+		this.g_name = g_name;
+		this.g_date = g_date;
+		this.g_cnt = g_cnt;
 		this.g_imgPath = g_imgPath;
 		this.g_link = g_link;
 	}
@@ -82,5 +101,13 @@ public class Game {
 
 	public void setG_link(String g_link) {
 		this.g_link = g_link;
+	}
+
+	public int getG_num() {
+		return g_num;
+	}
+
+	public void setG_num(int g_num) {
+		this.g_num = g_num;
 	}
 }

@@ -10,7 +10,7 @@
 	String gamePage_ = request.getParameter("p");
 	int gamePage = 1;
 	if(gamePage_ != null && !gamePage_.equals("")) gamePage = Integer.parseInt(gamePage_);
-	
+
 	// DB 테이블 및 뷰 생성
 	GameService service = new GameService();
 	service.createTable("G_MEMBER");
@@ -22,10 +22,11 @@
 	ArrayList<Game> hotGame = service.getHotGameList();
 	ArrayList<Game> newGame = service.getNewGameList();
 	ArrayList<Game> allGame = service.getGameList(gamePage, 3);
+	ArrayList<Member> top5User = service.getRangking();
 	
 	// 페이지 계산
 	int dbCnt = service.getCount();
-	int pageNum = (dbCnt%3 == 0) ?  (dbCnt/3) : (dbCnt/3)+1;
+	int pageNum = (dbCnt%3 == 0) ? (dbCnt/3) : (dbCnt/3)+1;
 	
 %>
 
@@ -34,7 +35,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Gameflix</title>
-<link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 <link rel="stylesheet" href="css/default.css">
@@ -80,7 +80,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 				<ul class="item">
 					<%for (Game g : hotGame) { %>
 					<li>
-						<a href="<%=g.getG_link()%>"> <img src="<%=g.getG_imgPath()%>" onerror="this.src='img/default.png'">
+						<a href="<%=g.getG_link()%>?gname=<%=g.getG_name()%>"> <img src="<%=g.getG_imgPath()%>" onerror="this.src='img/default.png'">
 							<div class="gameInfo">
 								<%=g.getG_name()%><span>플레이횟수 : <%=g.getG_cnt()%></span>
 							</div>
@@ -97,7 +97,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 				<ul class="item">
 					<%for(Game g : newGame) { %>
 					<li>
-						<a href="<%=g.getG_link() %>">
+						<a href="<%=g.getG_link()%>?gname=<%=g.getG_name()%>">
 							<img src="<%=g.getG_imgPath() %>" onerror="this.src='img/default.png'">
 							<div class="gameInfo">
 								<%=g.getG_name() %><span>등록일 : <%=g.getG_date() %></span>
@@ -116,7 +116,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 				<ul class="item">
 					<%for(Game g : allGame) { %>
 					<li>
-						<a href="<%=g.getG_link() %>">
+						<a href="<%=g.getG_link()%>?gname=<%=g.getG_name()%>">
 							<img src="<%=g.getG_imgPath() %>" onerror="this.src='img/default.png'">
 							<div class="gameInfo">
 								<%=g.getG_name() %><span>등록일 : <%=g.getG_date() %></span>
@@ -147,14 +147,15 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 				<table>
 					<colgroup>
 						<col style="width: 50%"/>
-						<col style="width: 50%"/>
+						<col style="width: 30%"/>
 					</colgroup>
 					<tr><th>아이디</th><th>점수</th></tr>
-					<tr><td>gun111</td><td>5000</td></tr>
-					<tr><td>gun222</td><td>4000</td></tr>
-					<tr><td>gun333</td><td>3000</td></tr>
-					<tr><td>gun444</td><td>2000</td></tr>
-					<tr><td>gun555</td><td>1000</td></tr>
+					<%
+					if(top5User != null) {
+						for(Member m : top5User) { %>
+						<tr><td><%=m.getM_name() %></td><td><%=m.getScore() %></td></tr>
+					<%}
+					} %>
 				</table>
 			</div>
 		</aside>
