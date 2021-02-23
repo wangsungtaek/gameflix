@@ -2,36 +2,26 @@
 	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 <%@ include file="header.jsp"%>
 
-<script>
-	function time() {
-		var cnt = 10;
-		var cntdown = document.querySelector("#cntdown");
-		var set = setInterval(function() {
-			cntdown.innerHTML = cnt;
-			cnt--;
-			if (cnt < 0) {
-				alert("퀴즈 바로 시작 버튼을 눌러주세요");
-				clearInterval(set);
-			}
-		}, 1000);
-	}
 
-	function btnalert() {
-
-		alert("퀴즈를 시작합니다.");
-	}
-</script>
 
 <style>
 body {
 	background-image: url(img/01.jpg);
 }
 
+.quiz_content {
+	margin: 0 auto;
+	background: white;
+	width: 1024px;
+	height: 1200px;
+	
+}
+
 .box {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 100 auto;
+	margin: -20 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -66,9 +56,37 @@ body {
 	float: center;
 }
 </style>
-</head>
-<body>
+<script>
+	function time() {
+		var cnt = 10;
+		var cntdown = document.querySelector("#cntdown");
+		var set = setInterval(function() {
+			cntdown.innerHTML = cnt;
+			cnt--;
+			if (cnt < 0) {
+				alert("퀴즈 바로 시작 버튼을 눌러주세요");
+				clearInterval(set);
+			}
+		}, 1000);
+	}
 
+	function btnalert() {
+
+		alert("퀴즈를 시작합니다.");
+	}
+	
+</script>
+</head>
+<%
+    String scoreS=request.getParameter("score"); 
+    if(scoreS==null) scoreS="0";
+	int score =Integer.parseInt(scoreS);
+   
+    
+%>
+
+<body>
+  <div class="quiz_content">
 	<div class="box">
 		<div class="text-box">
 
@@ -89,29 +107,29 @@ body {
 
 			<p>
 			<h3>가시화 언어 : 개념 모델 작성 시 오류가 적고 의사소통이 용이</h3>
-			</p>
+			
 			<p>
 			<h3>구축 언어 : 다양한 프로그래밍 언어로 실행 시스템의 예측 가능</h3>
-			</p>
+			
 			<p>
 			<h3>명세화 언어 : 정확한 모델 제시, 완전한 모델 작성 가능</h3>
-			</p>
+		
 			<p>
 			<h3>문서화 언어 : 시스템에 대한 평가 및 의사소통의 문서</h3>
-			</p>
+			
 
 
 
 		</div>
 		<!-- text-box -->
-
+   
 		<a class="btn blue" href=""> 상단의 시계를 클릭해주세요</a> <a class="btn blue2"
-			href="01quiz_test.jsp" onclick="btnalert()">퀴즈 바로 시작 </a>
+			href="01quiz_test.jsp?score=<%=score %>"  onclick="btnalert()">퀴즈 바로 시작 </a>
 
 		<!-- box -->
 	</div>
 	<br>
-
+    </div>
 
 	<h2></h2>
 </body>

@@ -25,12 +25,18 @@
 body {
 	background-image: url(img/01.jpg);
 }
-
+.quiz_content {
+	margin: 0 auto;
+	background: white;
+	width: 1024px;
+	height: 1200px;
+	
+}
 .box {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 100 auto;
+	margin: -20 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -66,8 +72,15 @@ body {
 }
 </style>
 </head>
+<%
+    String scoreS=request.getParameter("score"); 
+    if(scoreS==null) scoreS="0";
+	int score =Integer.parseInt(scoreS);
+   
+    
+%>
 <body>
-
+   <div class="quiz_content">
 	<div class="box">
 		<div class="text-box">
 
@@ -91,17 +104,17 @@ body {
 				SELECT (데이터 조회) : 해당 테이블을 구성하는 튜플 중에서 전체 또는 조건을 <br>만족하는 튜플을
 				검색하여 주기억장치 상에 임시 테이블로 구성하는 명령문
 			</h3>
-			</p>
+		
 			<p>
 			<h3>INSERT(데이터 생성) : 해당 테이블에 새로운 튜플을 삽입할 때 사용하는 명령문</h3>
-			</p>
+			
 			<p>
 			<h3>UPDATE(데이터 변경) : 해당 테이블에 있는 튜플 중에서 특정 튜플의 내용을 변경할 때 사용하는 명령문
 			</h3>
-			</p>
+			
 			<p>
 			<h3>DELETE(데이터 삭제) : 해당 테이블에 있는 튜플 중에서 특정 튜플을 삭제할 때 사용하는 명령문</h3>
-			</p>
+			
 
 
 
@@ -109,13 +122,13 @@ body {
 		<!-- text-box -->
 
 		<a class="btn blue" href="03quiz_test.jsp"> 상단의 시계를 클릭해주세요</a> <a
-			class="btn blue2" href="03quiz_test.jsp" onclick="btnalert()">퀴즈
+			class="btn blue2" href="03quiz_test.jsp?score=<%=score %>" onclick="btnalert()">퀴즈
 			바로 시작 </a>
 
 		<!-- box -->
 	</div>
 	<br>
-
+  </div>
 
 	<h2></h2>
 </body>

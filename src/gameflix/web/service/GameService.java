@@ -322,16 +322,23 @@ public class GameService {
 		return list;
 	}	
 	
-	// 등록된 게임 갯수
+	// 게임 갯수
 	public int getCount() {
-		String sql = "SELECT count(*) cnt FROM G_GAME";
+		return getCount("");
+	}
+
+	public int getCount(String query) {
+		String sql = "SELECT COUNT(g_name) count FROM ( "
+					+ "	SELECT * FROM G_GAME WHERE G_NAME LIKE ? "
+					+ ")";
 		int cnt=0;
 		try {
 			setCon();
 			prst = conn.prepareStatement(sql);
+			prst.setString(1, "%"+query+"%");
 			rs = prst.executeQuery();
 			if(rs.next()) {
-				cnt = rs.getInt("cnt");
+				cnt = rs.getInt("count");
 			}
 			
 			rs.close();
@@ -400,7 +407,7 @@ public class GameService {
 	
 	// 게임 로그 추가
 	public void addPlayLog(int no, String game, int point) {
-		String sql = "INSERT INTO G_PLAYLOG VALUES(g_playlog_seq.nextval,?,?,?)";
+		String sql = "INSERT INTO G_PLAYLOG VALUES(g_playlog_no_seq.nextval,?,?,?)";
 				
 			try {
 				setCon();
@@ -419,7 +426,8 @@ public class GameService {
 	}
 	
 	public static void main(String[] args) {
-//		GameService service = new GameService();
-//		
+		GameService service = new GameService();
+		int cnt = service.getCount();
+		System.out.println(cnt);
 	}
 }

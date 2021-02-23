@@ -28,9 +28,10 @@ public class GameListControl extends HttpServlet {
 		
 		GameService service = new GameService();
 		ArrayList<Game> list = service.getSearchList(query,page);
+		int count = service.getCount(query);
 		
+		request.setAttribute("count", count);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("searchResultPage.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("main/searchResultPage.jsp").forward(request, response);
 	}
 }

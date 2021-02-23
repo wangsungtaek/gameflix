@@ -25,12 +25,18 @@
 body {
 	background-image: url(img/01.jpg);
 }
-
+.quiz_content {
+	margin: 0 auto;
+	background: white;
+	width: 1024px;
+	height: 1200px;
+	
+}
 .box {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 100 auto;
+	margin: -20 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -66,8 +72,15 @@ body {
 }
 </style>
 </head>
+<%
+    String scoreS=request.getParameter("score"); 
+    if(scoreS==null) scoreS="0";
+	int score =Integer.parseInt(scoreS);
+    
+    
+%>
 <body>
-
+  <div class="quiz_content">
 	<div class="box">
 		<div class="text-box">
 			<h1>
@@ -106,13 +119,13 @@ body {
 		<!-- text-box -->
 
 		<a class="btn blue" href="02quiz_test.jsp"> 상단의 시계를 클릭해주세요</a> <a
-			class="btn blue2" href="02quiz_test.jsp" onclick="btnalert()">퀴즈
+			class="btn blue2" href="02quiz_test.jsp?score=<%=score %>" onclick="btnalert()" >퀴즈
 			바로 시작</a>
 
 		<!-- box -->
 	</div>
 	<br>
-
+</div>
 
 	<h2></h2>
 </body>

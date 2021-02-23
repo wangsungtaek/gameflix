@@ -1,3 +1,4 @@
+<%@page import="gameflix.web.service.Gameflix_DAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
@@ -16,8 +17,18 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="default.css">
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"></jsp:useBean>
+<jsp:setProperty property="*" name="m"/>
 <%
+	String proc = request.getParameter("proc");
+	Gameflix_DAO dao = new Gameflix_DAO();
+	if(proc != null){
+		if(proc.equals("upt")){
+			Member m1 = new Member(m.getM_no(), m.getM_id(), m.getM_pw(), m.getM_name(), m.getM_email(), m.getM_nickname());
+			dao.uptMember(m1);
+		}
+	}
 %>
 <style>
 #section_size{
@@ -42,15 +53,8 @@ body{
 	font-size:12pt;	
 	padding-top:15px;
 }
+
 </style>
-<script type="text/javascript">
-function user_page(){
-	location.href="UserInfo.jsp";
-};
-function Rank_page(){
-	location.href="Mypage_Ranking.jsp";
-};
-</script>
 </head>
 <body onload="showImage()">
 	<%@ include file="header.jsp" %>
@@ -60,9 +64,6 @@ function Rank_page(){
 		<div class="row" id="section_size">
 			<div class="col" id="section_size2">
 				<!-- 마이페이지 흰색 줄 -->
-				<div class="row">
-					<div class="col" style="background-color:white;">　</div>
-				</div>
 				<!-- 마이페이지 배너 -->
 				<div class="row" id="mypage_banner">
 					<div class="col" style="margin-top:4%;">
@@ -92,20 +93,22 @@ function Rank_page(){
 					<div class="col-1"></div>
 				</div>
 				<!-- 내용컨테이너 -->
-				<div class="row" style="background-color:black; height:68%;">
+				<div class="row" style="background-color:black; height:70%;">
 					<div class="col-1"></div>
 					<div class="col"">
-						<div class="row" style="height:12.5%; margin-top:25px; text-align:center;">
+						<form method="get" id="manage">
+						<input type="hidden" name="proc" value=""/>
+						<div class="row" style="height:12.5%;  text-align:center;">
 							<div class="col-3">
 								<h4>회원정보 수정</h4>
 							</div>
 						</div>
-						<div class="row" style="height:12.5%;">
+						<div class="row" style="height:12.5%; margin-top:20px;">
 							<div class="col-3">
 								<span class="badge bg-secondary">이름</span>
 							</div>
 							<div class="col">
-								<input type="text" value="기존데이터" class="form-control">
+								<input type="text" name="m_name" value="<%=m.getM_name()%>" class="form-control"/>
 							<hr></div>
 						</div>
 						<div class="row" style="height:12.5%;">
@@ -113,7 +116,7 @@ function Rank_page(){
 								<span class="badge bg-secondary">아이디</span>
 							</div>
 							<div class="col">
-							<input type="text" value="기존데이터" class="form-control">
+							<input type="text" name="m_id" value="<%=m.getM_id()%>" class="form-control"/>
 							<hr></div>
 						</div>
 						<div class="row" style="height:12.5%;">
@@ -121,7 +124,7 @@ function Rank_page(){
 								<span class="badge bg-secondary">비밀번호</span>
 							</div>
 							<div class="col">
-							<input type="password" value="기존데이터" class="form-control">							
+							<input type="text" name="m_pw" value="<%=m.getM_pw()%>" class="form-control"/>							
 							<hr></div>
 						</div>
 						<div class="row" style="height:12.5%;">
@@ -129,7 +132,7 @@ function Rank_page(){
 								<span class="badge bg-secondary">이메일</span>
 							</div>
 							<div class="col">
-							<input type="text" value="기존데이터" class="form-control">
+							<input type="text" name="m_email" value="<%=m.getM_email()%>" class="form-control"/>
 							<hr></div>
 						</div>
 						<div class="row" style="height:12.5%;">
@@ -137,7 +140,7 @@ function Rank_page(){
 								<span class="badge bg-secondary">닉네임</span>
 							</div>
 							<div class="col">
-							<input type="text" value="기존데이터" class="form-control">
+							<input type="text" name="m_nickname" value="<%=m.getM_nickname()%>" class="form-control"/>
 							<hr></div>
 						</div>
 						<div class="row" style="height:12.5%;">
@@ -145,10 +148,11 @@ function Rank_page(){
 							</div>
 							<div class="col"></div>							
 							<div class="col" style="text-align:right;">
-								<input class="btn btn-secondary" type="submit" value="수정완료">
+								<input class="btn btn-secondary" type="button" value="수정완료" onclick="uptBtn()"/>
 							</div>
 						</div>
 						<div class="row" style="height:12.5%;"></div>
+						</form>
 					</div>	
 					<div class="col-1"></div>
 				</div>
@@ -160,4 +164,22 @@ function Rank_page(){
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 </body>
+<script type="text/javascript">
+function user_page(){
+	location.href="UserInfo.jsp";
+};
+function Rank_page(){
+	location.href="Mypage_Ranking.jsp";
+};
+function uptBtn(){
+	document.querySelector("[name=proc]").value="upt";
+	document.querySelector("#manage").submit();
+}
+var proc = "<%=proc%>";
+if(proc == "upt"){
+	if(confirm("정보수정이 완료되었습니다.\n 마이페이지로 이동하겠습니다.")){
+		location.href="UserInfo.jsp";
+	}
+}
+</script>
 </html>

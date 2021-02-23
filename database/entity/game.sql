@@ -255,5 +255,9 @@ SELECT rownum, g.* FROM (
 	 WHERE p.G_NAME = g.G_NAME
 	GROUP BY p.g_name, g.G_IMGPATH, g.G_LINK 
 	ORDER BY cnt DESC
-) g
+) g;
+SELECT * FROM G_GAME;
 WHERE rownum IN(1,2,3);
+SELECT COUNT(g_name) count FROM ( 
+	SELECT * FROM G_GAME WHERE G_NAME LIKE '%%'
+);

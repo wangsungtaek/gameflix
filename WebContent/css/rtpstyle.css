@@ -3,11 +3,13 @@
 .main {
 	width:1024px;
 	margin:0 auto;
+	padding-bottom:40px;
+	background-color:white;
 }
 .game-title {
 	height:100px;
 }
-.title {
+.gtitle {
 	text-align:center;
 	padding-top:25px;
 	color:black;
@@ -16,6 +18,7 @@
 	width:800px;
 	height:600px;
 	margin:0 auto;
+	/*margin-bottom:30px;*/
 	background-image: url("../img/rf-background.png");
 }
 .game {
@@ -36,7 +39,6 @@
 .endingfox {
 	animation-name:animation;
 	animation-duration:6s;
-	
 }
 @keyframes animation{
 	0%{left:50px;}

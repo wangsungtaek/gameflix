@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*" 
-    import="jspexp.z01_vo.*"
+    import="gameflix.web.service.CardgameService"
 %>
-<% request.setCharacterEncoding("UTF-8");
-   String path = request.getContextPath();
+<%
+	request.setCharacterEncoding("UTF-8");
+    String path = request.getContextPath();
 %>    
 <!DOCTYPE html>
 <html>
@@ -67,21 +68,28 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	
 </script>
 </head>
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>
 <%
 	String countS=request.getParameter("count");
 	if(countS==null) countS="0";
 	int count=Integer.parseInt(countS);
+	CardgameService dao=new CardgameService();
+	String g_name=dao.selectGname("cardgame.jsp");
+	dao.CardPlayLog(m.getM_no(),g_name,count);
+	String badge=dao.selectbadge(m.getM_no()); 
 %>
 <body>
-	<%@ include file="header.jsp"  %>
+	<%@ include file="header.jsp" %>
 	<div class="card_res_content">
 		<div id="card_tab_content">
 			<table id="card_tab">
-				<tr><td><span><%=count %></span> point!</td></tr>
+				<tr><td><span><%=count%></span> point!</td></tr>
+				<tr><td><span><img src="<%=badge%>" width="100" height="100"></span></td></tr>
 				<tr><td><input type="button" id="c_re_button" value="Restart" onclick="location.href='cardgame.jsp'"></td></tr>
 			</table>
 		</div>
 	</div>
 	<%@ include file="footer.jsp"  %>
+
 </body>
 </html>

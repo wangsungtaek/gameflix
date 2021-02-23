@@ -2,7 +2,7 @@
 <%@page import="gameflix.web.service.GameService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%	
 	request.setCharacterEncoding("UTF-8");
 
@@ -13,10 +13,10 @@
 
 	// DB 테이블 및 뷰 생성
 	GameService service = new GameService();
-	service.createTable("G_MEMBER");
-	service.createTable("G_GAME");
-	service.createTable("G_BADGE");
-	service.createTable("G_PLAYLOG");
+// 	service.createTable("G_MEMBER");
+// 	service.createTable("G_GAME");
+// 	service.createTable("G_BADGE");
+// 	service.createTable("G_PLAYLOG");
 	
 	// 리스트 읽어오기
 	ArrayList<Game> hotGame = service.getHotGameList();
@@ -66,10 +66,11 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	<%@ include file="header.jsp" %>
 	
 	<div id="container">
-	
+		<c:if test="${m.m_name == 'admin'}">
 		<div id="gameInsert-link">
 			<a href="gameManager.jsp">게임관리</a>
 		</div>
+		</c:if>
 
 		<!-- ------------------- <HOT GAME LIST> --------------------------------------- -->
 			

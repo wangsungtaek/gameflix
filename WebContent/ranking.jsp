@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import = "java.util.*"
-    import = "jspExp.z01_vo.*"%>
+    import="gameflix.web.entity.*"
+    import = "gameflix.web.service.*"
+   %>
 <% request.setCharacterEncoding("UTF-8"); 
 	String path = request.getContextPath();
 %>
@@ -10,14 +12,18 @@
 <head>
 <meta meta http-equiv="Content-Type" charset="UTF-8">
 <title>Gameflex</title>
-<link rel="stylesheet" href="default.css">
+<link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
+integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+<link rel="stylesheet" href="css/default.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script>
 <style>
 	
 	body{
 	background : black;
 	margin : 0px;
 	padding : 0px;
-	height : 900px;
+	height : 750px;
 	}
 	
    .contents-wrap {
@@ -30,7 +36,8 @@
 	position : absolute;
 	font-size : 35px;
 	font-weight : bold;	
-	margin-left : 680px;
+	left : 50%;
+	margin-left : -80px; 
 	margin-top : 70px;
 	
 	}
@@ -91,29 +98,7 @@
    	  height :40px; 
    	  border-bottom : 0.5px solid #fff;
    	}
-   	/* 페이지버튼 */
-   #btn_group{
-  	  position : absolute;
-      top : 700px;
-	  left : 50%;
-	  width : 150px;
-	  height : 30px;
-      margin-left: -75px;
-      padding-bottom : 200px;
-   }     
-   #btn{  	     	  
-   	  display : inline-block;
-   	  width : 25px;  	  
-   	  padding : 5px;
-      color : darkgray;
-      border-radius : 50%;
-      border : none;
-      font-size : 16px;
-   }  
-   #btn:hover{
-   	  background-color : #F23005;
-   	  color : #fff;
-   }
+  
 </style>
 <script>
 	window.onload = function(){
@@ -138,107 +123,120 @@
 	         <input type="button" value="길찾기게임" onclick="game6()">         
 	      </form>
 	   </div>
-	       
+	   <jsp:useBean id="r" class="gameflix.web.entity.Ranking" scope="session"/>
+	   <jsp:setProperty property="*" name="r"/> 
+			    
 	   <div id="game_rank">
 	     	 <table id="game1_rank" border>
 	     	 	<col width="33%"><col width="33%"><col width="34%">
 	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>
-	     		<tr><td>1</td> <td>game1_user1</td> <td>123</td></tr>
-	     		<tr><td>2</td> <td>game1_user2</td> <td>123</td></tr>
-	     		<tr><td>3</td> <td>game1_user3</td> <td>123</td></tr>
-	     		<tr><td>4</td> <td>game1_user4</td> <td>123</td></tr>
-	     		<tr><td>5</td> <td>game1_user5</td> <td>123</td></tr>
-	     		<tr><td>6</td> <td>game1_user6</td> <td>123</td></tr>
-	     		<tr><td>7</td> <td>game1_user7</td> <td>123</td></tr>
-	     		<tr><td>8</td> <td>game1_user8</td> <td>123</td></tr>
-	     		<tr><td>9</td> <td>game1_user9</td> <td>123</td></tr>
-	     		<tr><td>10</td> <td>game1_user10</td> <td>123</td></tr>  		
+	     		<% 	     		
+	     		RankingService dao = new RankingService();
+	     		ArrayList<Ranking> rlist1 = dao.rankList1();
+	     		int cnt1=1;
+	     		for(Ranking rk : rlist1){ 
+	     		%>	     		
+	     		<tr>
+		     		<td><%=cnt1++ %></td>
+		   			<td><%= rk.getM_nickname() %></td>
+		   			<td><%= rk.getP_score() %></td> 
+	   			</tr>
+	   			<%} %>		
 	     	 </table> 
 	    	 
 	     	 <table id="game2_rank" border>
 	     	 	<col width="33%"><col width="33%"><col width="34%">
-	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>
-	     		<tr><td>1</td> <td>game2_user1</td> <td></td></tr>
-	     		<tr><td>2</td> <td>game2_user2</td> <td></td></tr>
-	     		<tr><td>3</td> <td>game2_user3</td> <td></td></tr>
-	     		<tr><td>4</td> <td>game2_user4</td> <td></td></tr>
-	     		<tr><td>5</td> <td>game2_user5</td> <td></td></tr>
-	     		<tr><td>6</td> <td>game2_user6</td> <td></td></tr>
-	     		<tr><td>7</td> <td>game2_user7</td> <td></td></tr>
-	     		<tr><td>8</td> <td>game2_user8</td> <td></td></tr>
-	     		<tr><td>9</td> <td>game2_user9</td> <td></td></tr>
-	     		<tr><td>10</td> <td>game2_user10</td> <td></td></tr>  		
-	     	 </table> 
-	     	 
+	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>	
+	     		<% 	     		
+	     		ArrayList<Ranking> rlist2 = dao.rankList2();
+	     		int cnt2=1;
+	     		%>	     		
+	     		
+	     			<% for(Ranking rk : rlist2){ %>
+	     			<tr>
+		     			<td><%=cnt2++ %></td>
+		     			<td><%= rk.getM_nickname() %></td>
+		     			<td><%= rk.getP_score() %></td> 
+	     			</tr>
+	     			<%} %>
+	     			
+	     	 </table> 	     	
+			
 	     	 <table id="game3_rank" border>
 	     	 	<col width="33%"><col width="33%"><col width="34%">
 	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>
-	     		<tr><td>1</td> <td>game3_user1</td> <td></td></tr>
-	     		<tr><td>2</td> <td>game3_user2</td> <td></td></tr>
-	     		<tr><td>3</td> <td>game3_user3</td> <td></td></tr>
-	     		<tr><td>4</td> <td>game3_user4</td> <td></td></tr>
-	     		<tr><td>5</td> <td>game3_user5</td> <td></td></tr>
-	     		<tr><td>6</td> <td>game3_user6</td> <td></td></tr>
-	     		<tr><td>7</td> <td>game3_user7</td> <td></td></tr>
-	     		<tr><td>8</td> <td>game3_user8</td> <td></td></tr>
-	     		<tr><td>9</td> <td>game3_user9</td> <td></td></tr>
-	     		<tr><td>10</td> <td>game3_user10</td> <td></td></tr>  		
+	     		
+	     		<% 	     		
+	     		ArrayList<Ranking> rlist3 = dao.rankList3();
+	     		int cnt3=1;
+	     		%>	     		
+	     		
+	     			<% for(Ranking rk : rlist3){ %>
+	     			<tr>
+		     			<td><%=cnt3++ %></td>
+		     			<td><%= rk.getM_nickname() %></td>
+		     			<td><%= rk.getP_score() %></td> 
+	     			</tr>
+	     			<%} %>
+	     			
+	     	 	
 	     	 </table> 
 	     	 
 	     	 <table id="game4_rank" border>
 	     	 	<col width="33%"><col width="33%"><col width="34%">
-	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>
-	     		<tr><td>1</td> <td>game4_user1</td> <td></td></tr>
-	     		<tr><td>2</td> <td>game4_user2</td> <td></td></tr>
-	     		<tr><td>3</td> <td>game4_user3</td> <td></td></tr>
-	     		<tr><td>4</td> <td>game4_user4</td> <td></td></tr>
-	     		<tr><td>5</td> <td>game4_user5</td> <td></td></tr>
-	     		<tr><td>6</td> <td>game4_user6</td> <td></td></tr>
-	     		<tr><td>7</td> <td>game4_user7</td> <td></td></tr>
-	     		<tr><td>8</td> <td>game4_user8</td> <td></td></tr>
-	     		<tr><td>9</td> <td>game4_user9</td> <td></td></tr>
-	     		<tr><td>10</td> <td>game4_user10</td> <td></td></tr>  		
+	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr> 	
+	     		<% 	     		
+	     		ArrayList<Ranking> rlist4 = dao.rankList4();
+	     		int cnt4=1;
+	     		%>	     		
+	     		
+	     			<% for(Ranking rk : rlist4){ %>
+	     			<tr>
+		     			<td><%=cnt4++ %></td>
+		     			<td><%= rk.getM_nickname() %></td>
+		     			<td><%= rk.getP_score() %></td> 
+	     			</tr>
+	     			<%} %>
+	     			
 	     	 </table> 
 	     	 
 	     	 <table id="game5_rank" border>
 	     	 	<col width="33%"><col width="33%"><col width="34%">
-	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>
-	     		<tr><td>1</td> <td>game5_user1</td> <td></td></tr>
-	     		<tr><td>2</td> <td>game5_user2</td> <td></td></tr>
-	     		<tr><td>3</td> <td>game5_user3</td> <td></td></tr>
-	     		<tr><td>4</td> <td>game5_user4</td> <td></td></tr>
-	     		<tr><td>5</td> <td>game5_user5</td> <td></td></tr>
-	     		<tr><td>6</td> <td>game5_user6</td> <td></td></tr>
-	     		<tr><td>7</td> <td>game5_user7</td> <td></td></tr>
-	     		<tr><td>8</td> <td>game5_user8</td> <td></td></tr>
-	     		<tr><td>9</td> <td>game5_user9</td> <td></td></tr>
-	     		<tr><td>10</td> <td>game5_user10</td> <td></td></tr>  		
+	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>  	
+	     		<% 	     		
+	     		ArrayList<Ranking> rlist5 = dao.rankList5();
+	     		int cnt5=1;
+	     		%>	     		
+	     		
+	     			<% for(Ranking rk : rlist5){ %>
+	     			<tr>
+		     			<td><%=cnt5++ %></td>
+		     			<td><%= rk.getM_nickname() %></td>
+		     			<td><%= rk.getP_score() %></td> 
+	     			</tr>
+	     			<%} %>
+	     			
 	     	 </table> 
 	     	 
 	     	 
 	     	 <table id="game6_rank" border>
 	     	 	<col width="33%"><col width="33%"><col width="34%">
 	     		<tr><th>순위</th><th>닉네임</th><th>점수</th></tr>
-	     		<tr><td>1</td> <td>game6_user1</td> <td></td></tr>
-	     		<tr><td>2</td> <td>game6_user2</td> <td></td></tr>
-	     		<tr><td>3</td> <td>game6_user3</td> <td></td></tr>
-	     		<tr><td>4</td> <td>game6_user4</td> <td></td></tr>
-	     		<tr><td>5</td> <td>game6_user5</td> <td></td></tr>
-	     		<tr><td>6</td> <td>game6_user6</td> <td></td></tr>
-	     		<tr><td>7</td> <td>game6_user7</td> <td></td></tr>
-	     		<tr><td>8</td> <td>game6_user8</td> <td></td></tr>
-	     		<tr><td>9</td> <td>game6_user9</td> <td></td></tr>
-	     		<tr><td>10</td> <td>game6_user10</td> <td></td></tr>  		
+	     		<% 	     		
+	     		ArrayList<Ranking> rlist6 = dao.rankList6();
+	     		int cnt6=1;
+	     		%>	     		
+	     		
+	     			<% for(Ranking rk : rlist6){ %>
+	     			<tr>
+		     			<td><%=cnt6++ %></td>
+		     			<td><%= rk.getM_nickname() %></td>
+		     			<td><%= rk.getP_score() %></td> 
+	     			</tr>
+	     			<%} %>
+	     		
 	     	 </table> 
-	     </div> 
-	     <!-- 페이지 버튼 -->
-	     <div id="btn_group">
-		    <button id="btn">1</button>  
-		    <button id="btn">2</button>  
-		    <button id="btn">3</button>  
-		    <button id="btn">4</button>  
-		    <button id="btn">5</button>  
-	     </div>  
+	     </div>   
      </div>    
 	
 	<%@ include file="footer.jsp" %> 

@@ -1,9 +1,15 @@
+
+<%@page import="gameflix.web.entity.Badge"%>
+<%@page import="gameflix.web.entity.PlayLog"%>
+<%@page import="com.sun.jdi.Location"%>
+<%@page import="gameflix.web.service.Gameflix_DAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
     import="jspexp.z01_vo.*"
     %>
-<% request.setCharacterEncoding("UTF-8");
+<% 
+request.setCharacterEncoding("UTF-8");
    String path = request.getContextPath();
 %>    
 <!DOCTYPE html>
@@ -16,8 +22,35 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="default.css">
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"></jsp:useBean>
 <%
+	Gameflix_DAO dao = new Gameflix_DAO();
+	ArrayList<PlayLog> bgilist = dao.bestGameInfo(m.getM_no());
+	
+	
+	Badge b_game1 = dao.getbadge(m.getM_no(), bgilist.get(0).getG_name());
+	Badge b_game2 = dao.getbadge(m.getM_no(), bgilist.get(1).getG_name());
+	Badge b_game3 = dao.getbadge(m.getM_no(), bgilist.get(2).getG_name());
+	Badge b_game4 = dao.getbadge(m.getM_no(), bgilist.get(3).getG_name());
+	Badge b_game5 = dao.getbadge(m.getM_no(), bgilist.get(4).getG_name());
+	Badge b_game6 = dao.getbadge(m.getM_no(), bgilist.get(5).getG_name());	
+	
+	
+	ArrayList<PlayLog> p_bestScoreInfoList = new ArrayList<PlayLog>();
+	for(int i=0; i<bgilist.size(); i++){
+		p_bestScoreInfoList.add(dao.bestScoreUserInfo(bgilist.get(i).getG_name()));
+	}
+	
+	
+	
+	
+	Member m_bs_game1_nick = dao.HighestPlayerNick(p_bestScoreInfoList.get(0).getM_no());
+	Member m_bs_game2_nick = dao.HighestPlayerNick(p_bestScoreInfoList.get(1).getM_no());
+	Member m_bs_game3_nick = dao.HighestPlayerNick(p_bestScoreInfoList.get(2).getM_no());
+	Member m_bs_game4_nick = dao.HighestPlayerNick(p_bestScoreInfoList.get(3).getM_no());
+	Member m_bs_game5_nick = dao.HighestPlayerNick(p_bestScoreInfoList.get(4).getM_no());
+	Member m_bs_game6_nick = dao.HighestPlayerNick(p_bestScoreInfoList.get(5).getM_no());	
 %>
 <style>
 #section_size{
@@ -26,7 +59,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	color:white;
 }
 #section_size2{
-	height:855px;
+	height:890px;
 }
 #mypage_banner{
 	background-color:black;
@@ -42,6 +75,10 @@ body{background-image: url(img/01.jpg);}
 .card-header{
 	text-align:center;
 }
+.socrebadge{
+		width: 30px;
+		height: 30px;
+	}
 </style>
 <script type="text/javascript">
 function user_page(){
@@ -59,9 +96,6 @@ function Rank_page(){
 	<section class="container">
 		<div class="row" id="section_size">
 			<div class="col" id="section_size2">
-				<div class="row">
-					<div class="col" style="background-color:white;">　</div>
-				</div>
 				<div class="row" id="mypage_banner">
 					<div class="col" style="margin-top:4%;">
 						<h3>My Page</h3><br>
@@ -85,18 +119,20 @@ function Rank_page(){
 					</table>
 					</div>
 				</div>
-				<div class="row" style="background-color:black; height:69%;">
+				<div class="row" style="background-color:black; height:72%;">
 					<div class="col">
 					<%--개인순위 첫줄(3개게임) --%>
 						<div class="row" style="height:25%">
 							<div class="col">
 								<div class="card text-white bg-secondary mb-3">
-									<div class="card-header">게임1</div>
+									<div class="card-header"><%=bgilist.get(0).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">뱃지</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">
+									    			<img class="socrebadge" src="<%=b_game1.getB_Path() %>"/>
+									    		</div>
+									    		<div class="col" style="text-align:right"><%=bgilist.get(0).getP_score() %>점</div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -104,12 +140,14 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-secondary mb-3">
-									<div class="card-header">게임2</div>
+									<div class="card-header"><%=bgilist.get(1).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">뱃지</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">
+									    			<img class="socrebadge" src="<%=b_game2.getB_Path() %>"/>
+									    		</div>
+									    		<div class="col" style="text-align:right"><%=bgilist.get(1).getP_score() %>점</div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -117,12 +155,14 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-secondary mb-3">
-									<div class="card-header">게임3</div>
+									<div class="card-header"><%=bgilist.get(2).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">뱃지</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">
+									    			<img class="socrebadge" src="<%=b_game3.getB_Path() %>"/>
+									    		</div>
+									    		<div class="col" style="text-align:right"><%=bgilist.get(2).getP_score() %>점</div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -133,12 +173,14 @@ function Rank_page(){
 						<div class="row" style="height:25%">
 							<div class="col">
 								<div class="card text-white bg-secondary mb-3">
-									<div class="card-header">게임4</div>
+									<div class="card-header"><%=bgilist.get(3).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">뱃지</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">
+									    			<img class="socrebadge" src="<%=b_game4.getB_Path() %>"/>
+									    		</div>
+									    		<div class="col" style="text-align:right"><%=bgilist.get(3).getP_score() %>점</div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -146,12 +188,14 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-secondary mb-3">
-									<div class="card-header">게임5</div>
+									<div class="card-header"><%=bgilist.get(4).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">뱃지</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">
+									    			<img class="socrebadge" src="<%=b_game5.getB_Path() %>"/>
+									    		</div>
+									    		<div class="col" style="text-align:right"><%=bgilist.get(4).getP_score() %>점</div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -159,12 +203,14 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-secondary mb-3">
-									<div class="card-header">게임6</div>
+									<div class="card-header"><%=bgilist.get(5).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">뱃지</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">
+									    			<img class="socrebadge" src="<%=b_game6.getB_Path() %>"/>
+									    		</div>
+									    		<div class="col" style="text-align:right"><%=bgilist.get(5).getP_score() %>점</div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -175,12 +221,12 @@ function Rank_page(){
 						<div class="row" style="height:25%">
 							<div class="col">
 								<div class="card text-white bg-danger mb-3">
-									<div class="card-header">게임1</div>
+									<div class="card-header"><%=bgilist.get(0).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">1위 : 닉네임</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">1위 : <%=m_bs_game1_nick.getM_nickname() %></div>
+									    		<div class="col" style="text-align:right"><%=p_bestScoreInfoList.get(0).getP_score() %></div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -188,12 +234,12 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-danger mb-3">
-									<div class="card-header">게임2</div>
+									<div class="card-header"><%=bgilist.get(1).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">1위 : 닉네임</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">1위 : <%=m_bs_game2_nick.getM_nickname() %></div>
+									    		<div class="col" style="text-align:right"><%=p_bestScoreInfoList.get(1).getP_score()%></div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -201,12 +247,12 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-danger mb-3">
-									<div class="card-header">게임3</div>
+									<div class="card-header"><%=bgilist.get(2).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">1위 : 닉네임</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">1위 : <%=m_bs_game3_nick.getM_nickname() %></div>
+									    		<div class="col" style="text-align:right"><%=p_bestScoreInfoList.get(2).getP_score()%></div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -217,12 +263,12 @@ function Rank_page(){
 						<div class="row" style="height:25%">
 							<div class="col">
 								<div class="card text-white bg-danger mb-3">
-									<div class="card-header">게임4</div>
+									<div class="card-header"><%=bgilist.get(3).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">1위 : 닉네임</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">1위 : <%=m_bs_game4_nick.getM_nickname() %></div>
+									    		<div class="col" style="text-align:right"><%=p_bestScoreInfoList.get(3).getP_score()%></div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -230,12 +276,12 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-danger mb-3">
-									<div class="card-header">게임5</div>
+									<div class="card-header"><%=bgilist.get(4).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">1위 : 닉네임</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">1위 : <%=m_bs_game5_nick.getM_nickname() %></div>
+									    		<div class="col" style="text-align:right"><%=p_bestScoreInfoList.get(4).getP_score()%></div>
 									    	</div>
 									    </h5>
 									  </div>
@@ -243,12 +289,12 @@ function Rank_page(){
 							</div>
 							<div class="col">
 								<div class="card text-white bg-danger mb-3">
-									<div class="card-header">게임6</div>
+									<div class="card-header"><%=bgilist.get(5).getG_name() %></div>
 									  <div class="card-body">
 									    <h5 class="card-title">
 									    	<div class="row">
-									    		<div class="col">1위 : 닉네임</div>
-									    		<div class="col" style="text-align:right">몇점</div>
+									    		<div class="col">1위 : <%=m_bs_game6_nick.getM_nickname() %></div>
+									    		<div class="col" style="text-align:right"><%=p_bestScoreInfoList.get(5).getP_score()%></div>
 									    	</div>
 									    </h5>
 									  </div>

@@ -7,13 +7,21 @@ body {
 	background-image: url(img/01.jpg);
 }
 
+.quiz_content {
+	margin: 0 auto;
+	background: white;
+	width: 1024px;
+	height: 1200px;
+	
+}
+
 .box {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 100 auto;
-	background-color: black;
-	border-radius: 60px;
+	margin: 0 auto;
+	background-color: white;
+	border-radius: 100px;
 }
 
 .img2 {
@@ -28,7 +36,7 @@ body {
 	color: white;
 	padding: 10px 20px 10px 20px;
 	margin: 20px;
-	display: block;
+	/*display: block;*/
 	border-radius: 10px;
 }
 
@@ -38,7 +46,7 @@ body {
 </style>
 </head>
 <body>
-
+<div class="quiz_content">
 	<div class="box">
 
 		<img src="img/main.pic.jpg" class="img2"> <a class="btn blue"
@@ -47,7 +55,7 @@ body {
 
 	</div>
 	<!-- box -->
-
+</div><!-- quiz_content -->
 
 	<h2></h2>
 </body>

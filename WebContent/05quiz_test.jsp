@@ -3,49 +3,24 @@
 	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 
 <%@ include file="header.jsp"%>
-<script>
-	function time() {
 
-		var cnt = 10;
-		var cntdown = document.querySelector("#cntdown");
-		var set = setInterval(function() {
-			cntdown.innerHTML = cnt;
-			cnt--;
-			if (cnt < 0) {
-				alert("정답을 선택해주세요.");
-				clearInterval(set);
-			}
-		}, 1000);
-	}
-
-	function click01() {
-		var move = confirm(" 정답입니다. 기출문제를 풀 수 있는 사이트로 이동하시겠습니까?");
-
-		if (move == true) {
-			window.open('https://www.comcbt.com/', '기출문제를 풀 수 있는 사이트',
-					'width=500, height=500');
-
-		} else if (move == false) {
-			alert("복습 페이지로 이동합니다.");
-		}
-	}
-
-	function click02() {
-		alert("땡 틀렸습니다. 답은 하이브리드 클라우드입니다. 복습 페이지로 이동합니다.");
-		
-		
-	}
-</script>
 <style>
 body {
 	background-image: url(img/01.jpg);
+}
+
+.quiz_content {
+	margin: 0 auto;
+	background: white;
+	width: 1024px;
+	height: 1200px;
 }
 
 .box {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 100 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -85,10 +60,44 @@ body {
 	float: center;
 }
 </style>
-</head>
-<body>
+<script>
+function time() {
 
-	<div class="box">
+	var cnt = 10;
+	var cntdown = document.querySelector("#cntdown");
+	var set = setInterval(function() {
+		cntdown.innerHTML = cnt;
+		cnt--;
+		if (cnt < 0) {
+			alert("정답을 선택해주세요.");
+			clearInterval(set);
+		}
+	}, 1000);
+}
+
+function click01() {
+	alert("축하합니다! 정답입니다.")
+}
+
+function click02() {
+	alert("땡 틀렸습니다. 답은 하이브리드 클라우드입니다.");
+	
+	
+}
+	
+</script>
+</head>
+<%
+    String scoreS=request.getParameter("score"); 
+    if(scoreS==null) scoreS="0";
+	int score =Integer.parseInt(scoreS);
+
+%>
+
+
+<body>
+ <div class="quiz_content">
+   <div class="box">
 		<div class="text-box">
 			<br>
 			<h1>
@@ -102,15 +111,16 @@ body {
 			<h3>5. 정보시스템 구축관리</h3>
 			<h1>기업 또는 조직 내부 자원을 이용한 사설 클라우드와 공용 클라우드를 모두 사용하는 클라우드는?</h1>
 		</div>
-		<br> <a class="btn blue" href="quiz_score.jsp"
+		<br> <a class="btn blue" href="06quiz.jsp?score=<%=score %>"
 			onclick="click02()"> 사설 클라우드 </a> <a class="btn red"
-			href="quiz_score.jsp" onclick="click02()"> 공용 클라우드 </a> <a
-			class="btn pink" href="quiz_score.jsp" onclick="click01()">
+			href="06quiz.jsp?score=<%=score %>" onclick="click02()"> 공용 클라우드 </a> <a
+			class="btn pink"  href="06quiz.jsp?score=<%=score+600 %>" onclick="click01()">
 			하이브리드 클라우드</a>
 
 
 
 
+	</div>
 	</div>
 
 	<h2></h2>

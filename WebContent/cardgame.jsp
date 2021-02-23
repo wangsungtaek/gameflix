@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*" 
-    import="jspexp.z01_vo.*"
+    import="gameflix.web.service.CardgameService"
 %>
-<% request.setCharacterEncoding("UTF-8");
-   String path = request.getContextPath();
+<%
+    request.setCharacterEncoding("UTF-8");
+    String path = request.getContextPath();
+%>
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>
+<%
+    CardgameService dao=new CardgameService();
+    dao.createPlaySeq();
+    dao.createCardBadge();   
+ 	String g_name=dao.selectGname("cardgame.jsp");
+ 	dao.CardBadge(g_name);
+	String badge=dao.selectbadge(m.getM_no());
 %>    
 <!DOCTYPE html>
 <html>
@@ -185,7 +195,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 </script>
 </head>
 <body>
-	<%@ include file="header.jsp"  %>
+	<%@ include file="header.jsp" %>
 	<div class="card_content">
 		<div id="game_box">
 			<div id="game_img"><img src="img/cardgame_bg.png" id="game_bg"></div>
@@ -195,6 +205,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 				<tr><td onclick="changecard(6)"><img src="img/card.PNG" class="card"></td><td onclick="changecard(7)"><img src="img/card.PNG" class="card"></td><td onclick="changecard(8)"><img src="img/card.PNG" class="card"></td></tr>
 				<tr><td onclick="changecard(9)"><img src="img/card.PNG" class="card"></td><td onclick="changecard(10)"><img src="img/card.PNG" class="card"></td><td onclick="changecard(11)"><img src="img/card.PNG" class="card"></td></tr>
 			</table>
+	
 		</div>
 		<div>
 			<progress value="60" max="60" id="jb"></progress>
@@ -203,6 +214,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 			<input type="button" value="게임 시작" onclick="start()" id="start_button">
 		</div>
 	</div>
+	
 	<%@ include file="footer.jsp"  %>
 </body>
 </html>

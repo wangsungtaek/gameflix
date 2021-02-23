@@ -1,22 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import = "java.util.*"
-    import = "jspExp.z01_vo.*"%>
+    import="gameflix.web.entity.*"
+    import = "gameflix.web.service.*"
+    %>
 <% request.setCharacterEncoding("UTF-8"); 
-	String path = request.getContextPath();
+	String path = request.getContextPath();	
 %>
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>		
+<jsp:useBean id="sc" class="gameflix.web.entity.PlayLog" scope="session" />   
+<jsp:setProperty property="*" name="sc"/>
+<%
+	Game2048Service dao = new Game2048Service();
+	dao.createPlaySeq();
+	dao.create2048BadgeSeq();
+	String g_name = dao.selectGname("2048.jsp");
+	
+	dao.game2048Badge(g_name);
+	String badge = dao.selectbadge(m.getM_no());
+	
+%>
+
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta meta http-equiv="Content-Type" charset="UTF-8">
-<title>Gameflex | 2048</title>
-<link rel="stylesheet" href="default.css">
+<title>Gameflex</title>
+<link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
+integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+<link rel="stylesheet" href="css/default.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script>
 <style>
 
 body{
-	background-color : #000;
+	background-image: url(img/01.jpg);
 }
-
+#game-container { 
+	height: 850px; 
+	width: 1024px; 
+	left : 50%; 
+	margin-left : -512px; 
+	background: whitesmoke;  
+	position: absolute;
+}
 
 td{
 	border-radius : 12px;
@@ -26,39 +54,45 @@ td{
 	color : #fff;
 	width : 85px;
 	height : 85px;
-	background-color : #dff7ed;
-	border : 3px solid #002200;
+	background-color : #f5fffb;
+	border : 3px solid #d8ede2;
 	margin : 5px;
+}
+
+#game{
+	width : 450px;
+	height : 500px;
+	background-color : #d8ede2;
+	display : absolute;
+	margin-left : 287px;
+	margin-top : 70px;
+	border-radius: 5px;
+	padding : 40px;
 }
 
 #head{
 	width : 300px;
 	height : 20px;
-	margin-left : 600px;
-	margin-top : 100px;	
+	display : relative;
+	margin : 0 auto;	
 }
 
 #titleZone{
 	width : 150px;
 	height : 20px;
-	background-color : #000;
-	margin : 0px;
+	background-color : #000;	
 }
 
 #title{
 	color : #fff;
-	font-size : 50px;
+	font-size : 45px;
 	font-weight : bold;
-	padding: 0px;
-    margin: 0px;
 }
 
 #scoreZone{
 	width : 150px;
 	height : 20px;
 	background-color : #056350;
-	margin-left : 30px;
-	padding : 0px;
 }
 
 #scoreTitle{
@@ -74,10 +108,9 @@ td{
 }
 
 #board{
-	position : absolute;
 	border : 2px solid #002200;
 	width : 350px;
-	margin-left : 580px;
+	margin : 0 auto;
 	margin-top : 20px;
 }
 
@@ -89,29 +122,32 @@ td{
 	};
 </script>
 </head>
+
 <body>
 <%@ include file="header.jsp" %>
+	<div id="game-container">
+		<div id="game">
+			<table id="head">
+				<tr>
+					<td id= "titleZone"> 
+						<p id="title">2048</p>
+					</td>
+					<td id= "scoreZone">
+						<p id="scoreTitle">Score</p>
+						<p id="score"></p>
+					</td>
+				</tr>
+			</table>		
 
-		<table id="head">
-			<tr>
-				<td id= "titleZone"> 
-					<p id="title">2048</p>
-				</td>
-				<td id= "scoreZone">
-					<p id="scoreTitle">Score</p>
-					<p id="score"></p>
-				</td>
-			</tr>
-		</table>
 		
-	
-		<table id="board" border>
-			<tr><td id="00"></td><td id="01"></td><td id="02"></td><td id="03"></td></tr>
-			<tr><td id="10"></td><td id="11"></td><td id="12"></td><td id="13"></td></tr>
-			<tr><td id="20"></td><td id="21"></td><td id="22"></td><td id="23"></td></tr>
-			<tr><td id="30"></td><td id="31"></td><td id="32"></td><td id="33"></td></tr>
-		</table>
-	
+			<table id="board" border>
+				<tr><td id="00"></td><td id="01"></td><td id="02"></td><td id="03"></td></tr>
+				<tr><td id="10"></td><td id="11"></td><td id="12"></td><td id="13"></td></tr>
+				<tr><td id="20"></td><td id="21"></td><td id="22"></td><td id="23"></td></tr>
+				<tr><td id="30"></td><td id="31"></td><td id="32"></td><td id="33"></td></tr>
+			</table>
+		</div>
+	</div>
 </body>
 <script>
 	
@@ -120,6 +156,8 @@ td{
 	var tableID = Array(Array("00","01","02","03"),Array("10","11","12","13"),
 						Array("20","21","22","23"),Array("30","31","32","33"));		
 	var score;
+	
+	
 	
 	// 방향키 입력
 	document.onkeydown = keyDownEventHandler;
@@ -252,7 +290,7 @@ td{
 					cell.style.background = "#081c5e";
 				} else {
 					cell.style.color = "#002200";
-					cell.style.background = "#dff7ed";
+					cell.style.background = "#f5fffb";
 				}
 			break;
 		}
@@ -299,7 +337,7 @@ td{
 		if(isMoved) {
 			generate();
 		} else {
-			checkGameOver();
+			checkGameover();
 		}
 	}
 	
@@ -357,24 +395,10 @@ td{
 	
 	// 게임 종료
 	function gameover(){
-		alert("GAME OVER\nSCORE : "+score);
-		init();
+		alert("GAME OVER\nSCORE : "+score);		
+		location.href="2048Result.jsp?score="+score;
 	}
 	
 	
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -190,6 +190,7 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 			setTimeout(function() {
 				var progress = document.querySelector("#timeOut");
 				var point = Number("${param.point}") + 100;
+				var gname = "${param.gname}";
 				console.log(gname);
  				location.href='c02_integrate_Game.jsp?game=start&time='+progress.value+'&point='+point+'&gname='+gname;
 			}, 500);

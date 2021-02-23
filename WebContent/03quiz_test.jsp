@@ -2,38 +2,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 <%@ include file="header.jsp"%>
-<script>
-	function time() {
 
-		var cnt = 10;
-		var cntdown = document.querySelector("#cntdown");
-		var set = setInterval(function() {
-			cntdown.innerHTML = cnt;
-			cnt--;
-			if (cnt < 0) {
-				alert("정답을 선택해주세요.");
-				clearInterval(set);
-			}
-		}, 1000);
-	}
-	function click01() {
-		alert("축하합니다! 정답입니다.")
-	}
-	function click02() {
-		alert("땡 틀렸습니다. 답은 UPDATE 입니다.")
-	}
-</script>
 
 <style>
 body {
 	background-image: url(img/01.jpg);
 }
 
+.quiz_content {
+	margin: 0 auto;
+	background: white;
+	width: 1024px;
+	height: 1200px;
+}
+
 .box {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 100 auto;
+	margin: 5 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -73,9 +60,39 @@ body {
 	float: center;
 }
 </style>
-</head>
-<body>
+<script>
+	function time() {
 
+		var cnt = 10;
+		var cntdown = document.querySelector("#cntdown");
+		var set = setInterval(function() {
+			cntdown.innerHTML = cnt;
+			cnt--;
+			if (cnt < 0) {
+				alert("정답을 선택해주세요.");
+				clearInterval(set);
+			}
+		}, 1000);
+	}
+	function click01() {
+		alert("축하합니다! 정답입니다.")
+	}
+	function click02() {
+		alert("땡 틀렸습니다. 답은 UPDATE 입니다.")
+	}
+	
+</script>
+</head>
+<%
+    String scoreS=request.getParameter("score"); 
+    if(scoreS==null) scoreS="0";
+	int score =Integer.parseInt(scoreS);
+  
+%>
+
+
+<body>
+  <div class="quiz_content">
 	<div class="box">
 		<div class="content">
 			<div class="text-box">
@@ -98,14 +115,14 @@ body {
 					<br>
 				</h1>
 			</div>
-			<br> <a class="btn blue" href="04quiz.jsp"
+			<br> <a class="btn blue" href="04quiz.jsp?score=<%=score %>"
 				onclick="click02()"> SELECT </a> <a class="btn red"
-				href="04quiz.jsp" onclick="click01()"> UPDATE</a> <a
-				class="btn pink" href="04quiz.jsp" onclick="click02()">
+				href="04quiz.jsp?score=<%=score+600 %>" onclick="click01()"> UPDATE</a> <a
+				class="btn pink" href="04quiz.jsp?score=<%=score %>" onclick="click02()">
 				INSERT</a>
-		</div>
+		</div> 
 	</div>
-
+   </div>
 	<h2></h2>
 </body>
 <%@ include file="footer.jsp"%>
