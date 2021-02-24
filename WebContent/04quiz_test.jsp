@@ -4,7 +4,7 @@
 <%@ include file="header.jsp"%>
 
 
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -114,7 +114,7 @@ body {
 			</h3>
 			<h1>
 				기억 장치의 어느 부분이 사용 중인지 또는 아닌지를 조사하여 <br> 프로세스에게 필요할 때마다 기억장치를 할당
-				후 회수하는 작업 수행을 하는 메모리 기본 사항은? <br>
+				후 <br>회수하는 작업 수행을 하는 메모리 기본 사항은? <br>
 				<br>
 			</h1>
 		</div>

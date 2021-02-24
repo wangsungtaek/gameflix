@@ -76,7 +76,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	CardgameService dao=new CardgameService();
 	String g_name=dao.selectGname("cardgame.jsp");
 	dao.CardPlayLog(m.getM_no(),g_name,count);
-	String badge=dao.selectbadge(m.getM_no()); 
+	String badge=dao.selectbadge(m.getM_no(),g_name); 
 %>
 <body>
 	<%@ include file="header.jsp" %>

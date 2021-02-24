@@ -36,14 +36,15 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 
 body{
 	background-image: url(img/01.jpg);
+	height : 1000px;
 }
 #game-container { 
-	height: 850px; 
+	height: 700px; 
 	width: 1024px; 
 	left : 50%; 
 	margin-left : -512px; 
 	background: whitesmoke;  
-	position: absolute;
+	position: relative;
 }
 
 td{
@@ -63,11 +64,11 @@ td{
 	width : 450px;
 	height : 500px;
 	background-color : #d8ede2;
-	display : absolute;
 	margin-left : 287px;
 	margin-top : 70px;
 	border-radius: 5px;
 	padding : 40px;
+	position: absolute;
 }
 
 #head{
@@ -148,6 +149,7 @@ td{
 			</table>
 		</div>
 	</div>
+<%@ include file="footer.jsp" %>
 </body>
 <script>
 	
@@ -163,10 +165,10 @@ td{
 	document.onkeydown = keyDownEventHandler;
 	function keyDownEventHandler(e){
 		switch(e.keyCode){
-			case 38 : rotateDir(0); break; // up
-			case 40 : rotateDir(1); break; // down
-			case 37 : rotateDir(2); break; // left
-			case 39 : rotateDir(3); break; // right
+			case 87 : rotateDir(0); break; // up
+			case 83 : rotateDir(1); break; // down
+			case 65 : rotateDir(2); break; // left
+			case 68 : rotateDir(3); break; // right
 		}
 	}
 	

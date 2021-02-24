@@ -378,8 +378,8 @@ public class loginService {
       } catch (Exception e) {
          System.out.println(e.getMessage());
       }
+      
    }
-   
    public void createbadgeTable() {   
       try {
          setCon();
@@ -433,7 +433,7 @@ public class loginService {
                + "   art_cate varchar2(30) NOT NULL,\r\n"
                + "   art_title varchar2(300) NOT NULL, \r\n"
                + "   art_content varchar2(4000) NOT NULL,\r\n"
-               + "   art_credte DATE NOT NULL -- 작성일\r\n"
+               + "   art_credte DATE NOT NULL\r\n"
                + ")";
          stmt= con.createStatement();
          rs=stmt.executeQuery(sql);
@@ -459,5 +459,4 @@ public class loginService {
       //dao.idfind("이길동", "ccc@naver.com");
       //dao.updatePass("himan", "1234");
    }
-
 }

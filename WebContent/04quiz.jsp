@@ -19,7 +19,7 @@
 		alert("퀴즈를 바로 시작하시겠습니까?");
 	}
 </script>
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -42,7 +42,7 @@ body {
 
 .text-box {
 	width: 1024px;
-	height: 600px;
+	height: 650px;
 	text-align: center;
 	background-color: white;
 	border-radius: 100px;

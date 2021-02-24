@@ -1,6 +1,15 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*" 
+	import="gameflix.web.service.*"
+	import="gameflix.web.entity.*"
+	import="gameflix.web.service.GamequizService"
+	%>
+	<%
+	request.setCharacterEncoding("UTF-8");
+   String path = request.getContextPath();
+%>    
+
 <%@ include file="header.jsp"%>
 
 
@@ -63,14 +72,17 @@ body {
 </style>
 </head>
 
-
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>
 <%
+   
     String scoreS=request.getParameter("score"); 
+   
     if(scoreS==null) scoreS="0";
 	int score =Integer.parseInt(scoreS);
-  
-    
-%>
+	GamequizService dao=new GamequizService();
+    String g_name=dao.selectGname("a.quiz_main.jsp");
+    dao.PlaylogInsert(m.getM_no(),g_name,score);
+   	%>
 
 
 <body>

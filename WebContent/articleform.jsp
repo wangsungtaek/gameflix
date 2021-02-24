@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글작성</title>
+<title>Gameflix 글작성</title>
 <link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -43,9 +43,8 @@ label { margin-right: 15px; }
 	String title = request.getParameter("title"); if(title==null) title="";
 	String content = request.getParameter("content"); if(content==null) content="";
 	if(!title.equals("")&&!content.equals("")&&!cate.equals("")){
-		Article ins = new Article(0, cate, title, content, null);
 		ArticleService as = new ArticleService();
-		as.insertArticle(ins);
+		as.insertArticle(new Article(0, cate, title, content, null));
 	}
 %>
 
@@ -98,8 +97,9 @@ label { margin-right: 15px; }
 		cateObj.setAttribute('checked', 'true');
 		var cate = "<%=cate%>";
 		var title = "<%=title%>";
-		var content ="<%=content%>";
-		if(cate!="" && title!="" && content!=""){
+		<%--var content ="<%=content%>";--%>
+		//content.replace("\r\n","<br>");
+		if(cate!="" && title!=""){
 			if(confirm("등록성공\n조회페이지로 이동하시겠습니까 ?")) {
 				location.href=cate+".jsp";
 			}

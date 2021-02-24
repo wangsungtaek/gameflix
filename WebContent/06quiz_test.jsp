@@ -4,7 +4,7 @@
 <%@ include file="header.jsp"%>
 
 
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);

@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 
 <%@ include file="header.jsp"%>
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -27,7 +27,7 @@ body {
 
 .text-box {
 	width: 1024px;
-	height: 600px;
+	height: 650px;
 	text-align: center;
 	background-color: white;
 	border-radius: 100px;
@@ -109,7 +109,8 @@ function click02() {
 			</h1>
 			<h3 id="cntdown"></h3>
 			<h3>5. 정보시스템 구축관리</h3>
-			<h1>기업 또는 조직 내부 자원을 이용한 사설 클라우드와 공용 클라우드를 모두 사용하는 클라우드는?</h1>
+			<br>
+			<h1>기업 또는 조직 내부 자원을 이용한 사설 클라우드와 <br>공용 클라우드를 모두 사용하는 클라우드는?</h1>
 		</div>
 		<br> <a class="btn blue" href="06quiz.jsp?score=<%=score %>"
 			onclick="click02()"> 사설 클라우드 </a> <a class="btn red"

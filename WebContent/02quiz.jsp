@@ -20,7 +20,7 @@
 
 	}
 </script>
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -36,14 +36,14 @@ body {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: -20 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
 
 .text-box {
 	width: 1024px;
-	height: 600px;
+	height: 650px;
 	text-align: center;
 	background-color: white;
 	border-radius: 100px;
@@ -70,6 +70,9 @@ body {
 	text-color: white;
 	float: center;
 }
+
+
+
 </style>
 </head>
 <%
@@ -83,6 +86,7 @@ body {
   <div class="quiz_content">
 	<div class="box">
 		<div class="text-box">
+		    <br>
 			<h1>
 				<strong> - Q2 Hint- </strong>
 			</h1>
@@ -93,8 +97,8 @@ body {
 			<h3 id="cntdown"></h3>
 			<h3>
 				2. 소프트웨어 개발 <br> 알고리즘이란? 알고리즘은 어떤 문제를 해결하기 위해 정해진 일련의 절차나 방법을
-				공식화한 형태로 표현한 기법이다. 알고리즘 기법<br> 알고리즘 설계 기법으로는 분할과 정복(Divide and
-				Conquer), 동적 계획법(Dynamic Programming) <br> 탐욕법(Greedy),
+				공식화한 형태로 표현한 기법이다.<br> 알고리즘 설계 기법으로는 분할과 정복(Divide and
+				Conquer)<br> 동적 계획법(Dynamic Programming) <br> 탐욕법(Greedy)<br>
 				백트래킹(Backtracking)이 있다.<br>
 				<br>
 			</h3>
@@ -109,7 +113,7 @@ body {
 			<h3>탐욕법 : 결정을 해야할 때마다 가장 좋다고 생각하는 것을 해답으로 선택</h3>
 			</p>
 			<p>
-			<h3>백트래킹 : 어떤 노드의 유망성 점검 후, 유망하지 않으면 그 노드의 부모 노드로 되돌아간 후 다른
+			<h3>백트래킹 : 어떤 노드의 유망성 점검 후, 유망하지 않으면<br> 그 노드의 부모 노드로 되돌아간 후 다른
 				자손노드를 검색하는 알고리즘</h3>
 			</p>
 

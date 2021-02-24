@@ -6,7 +6,7 @@
 %>
 <%@ include file="header.jsp"%>
 
-
+<link rel="stylesheet" href="css/default.css">
 
 <style>
 body {
@@ -25,7 +25,7 @@ body {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: -20 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -102,7 +102,7 @@ body {
 	<div class="box">
 		<div class="content">
 			<div class="text-box">
-
+                <br>
 				<h1>
 					<strong> - Q2 - </strong>
 				</h1>
@@ -115,7 +115,7 @@ body {
 					2. 소프트웨어 개발 <br> <br>
 				</h3>
 				<h1>
-					결정을 해야할 때, 가장 좋다고 생각되는 것을 해답으로 선택하는 방식의 알고리즘 기법은?<br> <br>
+					결정을 해야할 때, 가장 좋다고 생각되는 것을 해답으로<br> 선택하는 방식의 알고리즘 기법은?<br> <br>
 				</h1>
 			</div>
 			<br> <a class="btn blue" href="03quiz.jsp?score=<%=score%>" onclick="click02()">

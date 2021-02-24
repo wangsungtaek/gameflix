@@ -353,18 +353,13 @@ public class GameService {
 	
 	// 게임삭제
 	public void deleteGame(String name) {
-		String[] sql = {
-			"DELETE FROM G_BADGE WHERE g_name = ?",
-			"DELETE FROM G_PLAYLOG WHERE g_name =  ?",
-			"DELETE FROM G_GAME WHERE g_name = ?"
-		};
+		String sql = "DELETE FROM G_GAME WHERE g_name = ?";
 		try {
 			setCon();
-			for(int i=0; i<sql.length; i++) {
-				prst = conn.prepareStatement(sql[i]);
-				prst.setString(1, name);
-				prst.execute();
-			}
+			prst = conn.prepareStatement(sql);
+			prst.setString(1, name);
+			prst.execute();
+			
 			prst.close();
 			conn.close();
 		} catch (SQLException e) {

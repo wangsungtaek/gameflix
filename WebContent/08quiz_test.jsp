@@ -7,7 +7,7 @@
 <%@ include file="header.jsp"%>
 
 
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -25,7 +25,7 @@ body {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: -20 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -102,7 +102,7 @@ body {
 	<div class="box">
 		<div class="content">
 			<div class="text-box">
-
+                <br>
 				<h1>
 					<strong> - Q8 - </strong>
 				</h1>

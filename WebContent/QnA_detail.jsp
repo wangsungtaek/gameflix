@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자주묻는질문</title>
+<title>Gameflix-자주묻는질문</title>
 <link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
@@ -16,84 +16,54 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/default.css">
 <style>
-body {
-	background-image: url(img/01.jpg);
-}
+body { background-image: url(img/01.jpg); }
 /* 페이지 규격 */
-.wrapper {
-	width: 1024px;
-	height: 700px;
-	background-color: white;
-	margin: 0 auto;
-}
-
-h3 {
-	position: absolute;
-	top: 110px;
-	left: 50%;
-	margin-left: -50px;
-	color: #963D2A;
-}
+.wrapper { width:1024px; background-color:whitesmoke; margin:0 auto; padding:0 150px;; }
+.main-title { text-align:center; color:#963D2A; padding:25px 0; }
 /* Q&A 테이블 */
 #QnA {
-	position: absolute;
-	top: 170px;
-	left: 50%;
 	border-collapse: collapse;
-	width: 700px;
-	height: 400px;
-	margin-left: -350px;
-	text-align: center;
+	width: 100%;;
 	font-size: 15px;
+	background-color:white;
 }
-
 #QnA th {
 	background-color: #963D2A;
 	color: #fff;
-	height: 30px;
+	height: 45px;
 }
-
-#QnA #title {
-	text-align: left;
-	padding-left: 10px;
+.credte {
+	padding:10px;
+	text-align:right;
+	border-bottom:1px dashed darkgray;
+}
+.artcontent {
+	padding:15px;
 }
 
 /* 페이지버튼 */
 #btn_group {
-	position: absolute;
-	top: 600px;
-	left: 50%;
-	width: 230px;
-	height: 30px;
-	margin-left: -75px;
+	height: 75px;
+	padding-top:15px;
+	position:relative;
 }
-
-.btn {
-	display: inline-block;
-	width: 70px;
-	padding: 5px;
-	color: darkgray;
-	border-radius: 50%;
-	border: none;
-	font-size: 15px;
-}
-
-#btn:hover {
-	background-color: #963D2A;
-	color: #fff;
-}
+.detailbtn { width:80px; height:25px; background:#963D2A; border-radius:3px;
+		color:white; border:none; font-size:14px; font-weight:bold;
+		cursor:pointer;}
+.detailbtn:hover { text-decoration:underline; background:#AC3D2A; }
+.listbtn { position:absolute; right:0; }
 </style>
 </head>
 <%
-
-
 String noS = request.getParameter("no");
 if (noS == null)
-	noS = "0";
+	noS = "1";
 int no = Integer.parseInt(noS);
 
 A01_Dao dao = new A01_Dao();
 Board board = dao.getBoard(no);
+board.setContent(board.getContent().replace("\r\n","<br>"));
+
 String proc = request.getParameter("proc");
 if(proc!=null){
 	if(proc.equals("del")){
@@ -102,41 +72,24 @@ if(proc!=null){
 	}
 }
 %>
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>
 <body>
-
-	<div class="page">
-
-		<!-- 헤더 -->
-		<%@ include file="header.jsp"%>
-
-		<div class="wrapper">
-			<h3>자주묻는 질문</h3>
-
-			<table id="QnA" border>
-				<col width="10%">
-				<col width="75%">
-				<col width="15%">
-				<tr>
-					<th></th>
-					<th><%=board.getTitle()%></th>
-					<th></th>
-				</tr>
-				<tr>
-
-					<td><%=board.getNo() %></td>
-					<td id="title"><%=board.getContent()%></td>
-					<td><%=board.getCredte()%></td>
-				</tr>
-
-			</table>
-
-			<!-- 페이지 버튼 -->
-			<div id="btn_group">
-				<button class="btn" onclick="location.href='QnA.jsp'">목록보기</button>
-				<button class="btn" onclick="location.href='articleUpdateForm.jsp?cate=qna&no=<%=board.getNo()%>'">수정</button>
-				<button class="btn" id="delbtn">삭제</button>
-			</div>
-
+	<!-- 헤더 -->
+	<%@ include file="header.jsp"%>
+	<div class="wrapper">
+		<h2 class="main-title">자주묻는 질문</h2>
+		<table id="QnA" >
+			<tr><th><%=board.getTitle()%></th></tr>
+			<tr><td class="credte"><strong>작성일</strong> : <%=board.getCredte()%></td></tr>
+			<tr><td class="artcontent"><%=board.getContent() %></td></tr>	
+		</table>
+		<!-- 페이지 버튼 -->
+		<div id="btn_group">
+			<%if(m.getM_id().equals("admin")){ %>
+			<button class="detailbtn" onclick="location.href='articleUpdateForm.jsp?cate=QnA&no=<%=board.getNo()%>'">수정</button>
+			<button class="detailbtn" id="delbtn">삭제</button>
+			<%} %>
+			<button class="detailbtn listbtn" onclick="location.href='QnA.jsp'">목록보기</button>
 		</div>
 	</div>
 	<!-- 하단사이트정보 -->
@@ -146,9 +99,9 @@ if(proc!=null){
 		var wrapper = document.querySelector(".wrapper");
 		delbtn.onclick = function(){
 			if(confirm("삭제하시겠습니까?")){
-				var formCode = "<form method='post'><input type='hidden' name='proc' value='del'/></form>";
+				var formCode = "<form id='delform' method='post'><input type='hidden' name='proc' value='del'/></form>";
 				wrapper.innerHTML+=formCode;
-				document.querySelector("form").submit();
+				document.querySelector("#delform").submit();
 			}
 		}
 		var proc="<%=proc%>";

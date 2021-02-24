@@ -22,7 +22,7 @@
 	}
 </script>
 
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -102,19 +102,18 @@ body {
 			</h3>
 			<br>
 			<br>
-			<p>
+			
 			<h3>사설 클라우드 (Private Cloud): 자체 컴퓨팅 자원으로 모든 하드웨어, 소프트웨어, 데이터를 수용</h3>
-			</p>
-			<p>
+			
 			<h3>
 				공용 클라우드 (Public Cloud): 클라우드 서비스 제공 업체에서 다중 사용자를 위한 <br> 컴퓨팅 자원
 				서비스를 제공하는 클라우드
 			</h3>
-			</p>
-			<p>
+		
+			
 			<h3>하이브리드 클라우드 (Hybrid Cloud): 기업 또는 조직 내부 자원을 이용한 <br>사설 클라우드와 공용
 				클라우드를 모두 사용하는 클라우드</h3>
-			</p>
+			
 		</div>
 		<!-- text-box -->
 
@@ -125,7 +124,7 @@ body {
 		<!-- box -->
 	</div>
 	</div>
-	<br>
+	
 </body>
 <%@ include file="footer.jsp"%>
 

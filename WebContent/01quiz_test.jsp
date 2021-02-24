@@ -24,7 +24,7 @@ body {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: -20 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -37,6 +37,7 @@ body {
 	border-radius: 100px;
 	border: 2px;
 	float: center;
+	
 }
 
 .btn {
@@ -65,7 +66,7 @@ body {
 }
 </style>
 
-
+<link rel="stylesheet" href="css/default.css">
 <script>
 	function time() {
 
@@ -108,7 +109,7 @@ body {
 		<div class="box">
 			<div class="content">
 				<div class="text-box">
-
+                    <br>
 					<h1>
 						<strong> - Q1 - </strong>
 					</h1>

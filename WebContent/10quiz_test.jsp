@@ -1,9 +1,10 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*" 
+	import="gameflix.quiz.*"%>
 
 <%@ include file="header.jsp"%>
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -76,7 +77,7 @@ function time() {
 }
 
 function click01() {
-	alert("축하합니다! 정답입니다. 복습 페이지로 이동합니다.")
+	alert("축하합니다! 정답입니다. 점수 확인 페이지로 이동합니다.")
 }
 
 function click02() {
@@ -110,7 +111,7 @@ function click02() {
 			</h1>
 			<h3 id="cntdown"></h3>
 			<h3>5. 정보시스템 구축관리</h3>
-			<h1>권한을 가진 사용자나 애플리케이션이 원하는 서비스를 지속 사용할 수 있도록 보장하는 특성은?</h1>
+			<h1>권한을 가진 사용자나 애플리케이션이 <br>원하는 서비스를 지속 사용할 수 있도록 보장하는 특성은?</h1>
 		</div>
 		<br> <a class="btn blue" href="quiz_score.jsp?score=<%=score%>"
 			onclick="click02()"> 기밀성 </a> <a class="btn red"

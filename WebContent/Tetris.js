@@ -122,18 +122,17 @@
         if(timerId){
             clearInterval(timerId);
             timerId = null;
-            $("#search_total").val("").focus();
         }
         
         //방향키를 누를때 발생할 함수.
         function control(e){
-            if(e.keyCode === 37){
+            if(e.keyCode === 65){
                 moveLeft();
-            }else if (e.keyCode === 38){
+            }else if (e.keyCode === 87){
                 rotate()
-            }else if(e.keyCode === 39){
+            }else if(e.keyCode === 68){
                 moveRight()
-            }else if (e.keyCode === 40){
+            }else if (e.keyCode === 83){
                 //↓를 누르면 빠르게 내려오기
                 moveDown()
             }
@@ -227,13 +226,13 @@
             if(timerId){
                 clearInterval(timerId);
                 timerId = null;
-                $("#search_total").val("").focus();
+                
             } else {
                 draw()
                 timerId = setInterval(moveDown, 1000);
                 nextRandom = Math.floor(Math.random()*theTetrominoes.length);
                 displayShape();
-                $("#search_total").val("").focus();
+                
             }
         })
 
@@ -264,7 +263,7 @@
                 const a = document.querySelector("[name=score]");
                 const b = document.querySelector("[name=g_title]");
                 a.value = score;
-                b.value = "테트리스";
+                b.value = "테트리스게임";
                 document.querySelector("#scoreResult").submit();
             }else{
                 scoreDisplay.innerHTML = "0";

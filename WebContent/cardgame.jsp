@@ -10,12 +10,10 @@
 <jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>
 <%
     CardgameService dao=new CardgameService();
-    dao.createPlaySeq();
-    dao.createCardBadge();   
  	String g_name=dao.selectGname("cardgame.jsp");
- 	dao.CardBadge(g_name);
-	String badge=dao.selectbadge(m.getM_no());
-%>    
+ 	//dao.CardBadge(g_name);
+	String badge=dao.selectbadge(m.getM_no(),g_name);
+%>     
 <!DOCTYPE html>
 <html>
 <head>

@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>길찾기게임</title>
+<title>Gameflix-길찾기게임</title>
 <link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -20,28 +20,28 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 body{background-image: url(img/01.jpg);}
 </style>
 </head>
+<jsp:useBean id="m" class="gameflix.web.entity.Member" scope="session"/>
 <%
-	String scoreS = request.getParameter("inscore");
+	String gname = request.getParameter("gname");
+	if(gname==null) gname="";
 	String status = request.getParameter("status");
 	if(status==null) status="";
+	String scoreS = request.getParameter("inscore");
 	int score=0;
 	if(scoreS!=null) score = Integer.parseInt(scoreS);
-	int m_no = 1;
 	
 	if(status.equals("end")){
-		log("로그준비완료 score:"+score+", status:"+status);
+		log("로그준비완료 score:"+score+", status:"+status+", gname:"+gname);
 		PlayLogService pls = new PlayLogService();
-		pls.insertPlayLog(new PlayLog(m_no, "길찾기게임", score));
+		pls.insertPlayLog(new PlayLog(m.getM_no(), gname, score));
 	}
 %>
 <body>
 	<%@ include file="header.jsp" %>
 	<div class="main">
-		<div class="game-title">
-			<h1 class="gtitle">집에 가고 싶은 여우</h1>
-		</div>
+		<h1 class="gtitle">집에 가고 싶은 여우</h1>
 		<div class="game-container">
- 			<form method="post">
+ 			<form id="rootform" method="post">
 				<input type="hidden" name="status" id="status">
 				<input type="hidden" name="inscore" id="inscore"/>
 			</form>	
@@ -52,10 +52,10 @@ body{background-image: url(img/01.jpg);}
 				<table class="rootTable"></table>
 			</div>
 			<div class="game-buttons">
-				<button class="btns gamestart" type="button" onclick="gameStart()">게임시작</button>
+				<button class="btns gamestart" type="button">게임시작</button>
 				<button class="btns gameinfo" type="button">게임안내</button>
-				<button class="btns gamehint" type="button" onclick="showRoot()">힌트</button>
-				<button class="showscore" type="button" disabled>0</button>
+				<button class="btns gamehint" type="button">힌트</button>
+				<button class="btns showscore" type="button" disabled>0</button>
 			</div>
 		</div>
 	</div>

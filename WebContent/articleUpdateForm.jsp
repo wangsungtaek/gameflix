@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글수정</title>
+<title>Gameflix 글수정</title>
 <link rel="Gaemflix icon" href="img/pabicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
 integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -41,6 +41,7 @@ label { margin-right: 15px; }
 <%
 String proc = request.getParameter("proc");
 String info = request.getParameter("cate"); if(info==null) info="";
+if(info.equals("qna")) info="QnA";
 String title = request.getParameter("title");
 String content = request.getParameter("content");
 String noS = request.getParameter("no");
@@ -114,8 +115,8 @@ if(proc!=null) {
 	}
 	var proc="<%=proc%>";
 	if(proc=="upt"){
-		if(confirm("수정성공\n메인페이지로 이동하시겠습니까 ?")) {
-			location.href="<%=info%>.jsp";
+		if(confirm("수정하시겠습니까?")) {
+			location.href="<%=info%>_detail.jsp?no=<%=no%>";
 		}
 	}
 	</script>

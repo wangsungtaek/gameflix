@@ -20,7 +20,7 @@
 
 	}
 </script>
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -36,14 +36,14 @@ body {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: -20 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
 
 .text-box {
 	width: 1024px;
-	height: 600px;
+	height: 650px;
 	text-align: center;
 	background-color: white;
 	border-radius: 100px;
@@ -83,7 +83,7 @@ body {
    <div class="quiz_content">
 	<div class="box">
 		<div class="text-box">
-
+           <br>
 			<h1>
 				<strong> - Q3 Hint - </strong>
 			</h1>

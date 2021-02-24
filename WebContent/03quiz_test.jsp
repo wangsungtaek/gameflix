@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 <%@ include file="header.jsp"%>
 
-
+<link rel="stylesheet" href="css/default.css">
 <style>
 body {
 	background-image: url(img/01.jpg);
@@ -20,7 +20,7 @@ body {
 	width: 1024px;
 	height: 800px;
 	text-align: center;
-	margin: 5 auto;
+	margin: 0 auto;
 	background-color: black;
 	border-radius: 50px;
 }
@@ -111,7 +111,7 @@ body {
 					<br>
 				</h3>
 				<h1>
-					DML의 유형 중 해당 테이블에 있는 튜플 중에서 특정 튜플의 내용을 변경할 때 사용하는 명령문은?<br>
+					DML의 유형 중 해당 테이블에 있는 튜플 중에서 <br> 특정 튜플의 내용을 변경할 때 사용하는 명령문은?<br>
 					<br>
 				</h1>
 			</div>
