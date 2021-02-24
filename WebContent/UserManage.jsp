@@ -116,7 +116,7 @@ body{
 								<span class="badge bg-secondary">아이디</span>
 							</div>
 							<div class="col">
-							<input type="text" name="m_id" value="<%=m.getM_id()%>" class="form-control"/>
+							<input type="button" name="m_id" value="<%=m.getM_id()%>" class="form-control" style="text-align:left;"/>
 							<hr></div>
 						</div>
 						<div class="row" style="height:12.5%;">
@@ -172,8 +172,16 @@ function Rank_page(){
 	location.href="Mypage_Ranking.jsp";
 };
 function uptBtn(){
-	document.querySelector("[name=proc]").value="upt";
-	document.querySelector("#manage").submit();
+	var pwCheck = document.querySelector("[name=m_pw]").value;
+	if(pwCheck.length>=8 && pwCheck.length<=16){
+		document.querySelector("[name=proc]").value="upt";
+		document.querySelector("#manage").submit();
+	}else{
+		alert("비밀번호를 8~16자리로 설정해주세요.");
+		location.herf("UserManage.jsp");
+	}
+	
+	
 }
 var proc = "<%=proc%>";
 if(proc == "upt"){

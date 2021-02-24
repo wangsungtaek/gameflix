@@ -3,6 +3,7 @@ package gameflix.web.service;
 import java.sql.*;
 import java.util.ArrayList;
 
+import gameflix.web.entity.Game;
 import gameflix.web.entity.Member;
 
 public class loginService {
@@ -402,6 +403,100 @@ public class loginService {
          System.out.println(e.getMessage());
       }
    }
+
+   public boolean hasBadge() {
+	      boolean b=false;
+	      
+	      try {
+	         setCon();
+	         String sql="SELECT * FROM G_BADGE";
+	         pstmt = con.prepareStatement(sql);
+	         rs=pstmt.executeQuery();
+	         b=rs.next();
+	         rs.close();
+	         pstmt.close();
+	         con.close();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	         System.out.println("DB 관련 에러");
+	         System.out.println(e.getMessage());
+	      } catch(Exception e) {
+	         System.out.println("기타 에러");
+	         System.out.println(e.getMessage());
+	      }
+	      //System.out.println(m.getM_id());
+	      return b;
+	  }
+
+   /*
+   public void insertBadge() {
+		
+		String[] sql = {"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',1000,'/img/badge/grade-6.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',2000,'/img/badge/grade-5.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',3000,'/img/badge/grade-4.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',4000,'/img/badge/grade-3.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',5000,'/img/badge/grade-2.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',6000,'/img/badge/grade-1.png')"};
+		try {
+			setCon();
+			for(int i=0;i<sql.length;i++) {
+				stmt = con.createStatement();
+				stmt.executeUpdate(sql[i]);
+			}
+			con.commit(); 
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("db 처리 에러");
+			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.out.println("일반 에러");
+		}
+	}
+   */
+   
+   public void insertBadge() {
+		
+		String[] sql = {"INSERT INTO G_GAME VALUES('1번게임',sysdate,0,'a','a')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',1000,'img/badge/grade-6.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',2000,'img/badge/grade-5.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',3000,'img/badge/grade-4.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',4000,'img/badge/grade-3.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',5000,'img/badge/grade-2.png')",
+						"INSERT INTO G_BADGE VALUES(g_badge_no_seq.nextval,'1번게임',6000,'img/badge/grade-1.png')"};
+		try {
+			setCon();
+			for(int i=0;i<sql.length;i++) {
+				stmt = con.createStatement();
+				stmt.executeUpdate(sql[i]);
+			}
+			con.commit(); 
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("db 처리 에러");
+			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.out.println("일반 에러");
+		}
+	}
    public void createArticleSeq() {   
       try {
          setCon();
@@ -458,5 +553,6 @@ public class loginService {
       //dao.login("dddd", "44dd");
       //dao.idfind("이길동", "ccc@naver.com");
       //dao.updatePass("himan", "1234");
+     // dao.insertBadge();
    }
 }

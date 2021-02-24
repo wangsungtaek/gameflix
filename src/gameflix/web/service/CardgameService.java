@@ -125,7 +125,8 @@ public class CardgameService {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CardgameService dao=new CardgameService();
-	//	dao.selectbadge(1,"카드게임");
+		dao.selectbadge(1,"2048게임");
+		
 		
 	}
 

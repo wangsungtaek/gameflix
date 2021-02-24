@@ -9,7 +9,7 @@
 	request.setCharacterEncoding("UTF-8");
    String path = request.getContextPath();
 %>    
-
+<link rel="stylesheet" href="css/default.css">
 <%@ include file="header.jsp"%>
 
 
@@ -30,8 +30,8 @@ body {
 	width: 1024px;
 	height: 700px;
 	text-align: center;
-	margin: -20 auto;
-	background-color: black;
+	margin: 0 auto;
+	background-color: white;
 	border-radius: 50px;
 }
 

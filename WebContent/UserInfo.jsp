@@ -29,7 +29,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	if(proc != null && !proc.equals("")){
 		if(proc.equals("del")){
 			dao.delUser(m);
-			response.sendRedirect("wan_login.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	}
 	ArrayList<PlayLog> bgilist = dao.bestGameInfo(m.getM_no());
@@ -160,7 +160,7 @@ integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfc
 	delBtn.onclick = function(){
 		if(confirm("정말로 탈퇴하시겠습니까??")){
 			document.querySelector("[name=proc]").value="del";
-			document.querySelector("delete").submit();
+			document.querySelector("#delete").submit();
 		}
 	}
 </script>

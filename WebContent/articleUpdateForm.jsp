@@ -115,8 +115,8 @@ if(proc!=null) {
 	}
 	var proc="<%=proc%>";
 	if(proc=="upt"){
-		if(confirm("수정하시겠습니까?")) {
-			location.href="<%=info%>_detail.jsp?no=<%=no%>";
+		if(confirm("수정성공\n메인페이지로 이동하시겠습니까 ?")) {
+			location.href="<%=info%>.jsp";
 		}
 	}
 	</script>

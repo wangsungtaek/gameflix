@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*" import="jspexp.z01_vo.*"%>
 <%@ include file="header.jsp"%>
-
-
 <link rel="stylesheet" href="css/default.css">
+
 <style>
 body {
 	background-image: url(img/01.jpg);

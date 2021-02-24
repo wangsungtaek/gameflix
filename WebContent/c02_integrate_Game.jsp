@@ -167,7 +167,7 @@ progress { width: 300px; height: 20px; padding-top: 5px;}
 				cnt++;
 				if(imgObj[i].alt == "white") {
 					imgObj[i].alt = selectorMemory;
-					imgObj[i].src = "http://localhost:7080/gameflix/img/piece/"+selectorMemory+"-"+cnt+".png";
+					imgObj[i].src = "http://localhost:8080/gameflix/img/piece/"+selectorMemory+"-"+cnt+".png";
 					// 경로설정 추가예정
 					selectorMemory = "";
 					isSelector = false;

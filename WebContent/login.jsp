@@ -19,9 +19,14 @@
    
    dao.createbadgeSeq();
    dao.createbadgeTable();
-   
+ //  dao.insertBadge();
    dao.createArticleSeq();
    dao.createArticleTable();
+ 
+   if(!dao.hasBadge()){
+	   dao.insertBadge();
+   }
+
 %>    
 <!DOCTYPE html>
 <html>
